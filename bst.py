@@ -11,6 +11,6 @@ class Tree(object):
     def __init__(self, root=None):
         self.root = root
 
-    def insert(self, value):
+    def insert(self, value, compare=value):
         if self.root is None:
             self.root = Leaf(value=value)
