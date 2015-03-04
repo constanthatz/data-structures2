@@ -6,7 +6,7 @@ from bst import Tree
 def test_tree():
     test_tree = Tree()
     test_tree.insert(5)
-    test_tree.insert(6)
+    test_tree.insert(4)
     test_tree.insert(8)
 
     return test_tree
@@ -42,3 +42,10 @@ def test_does_not_contains(test_tree):
 
 def test_size(test_tree):
     assert test_tree.size() == 3
+
+
+def test_balance(test_tree):
+    assert test_tree.balance() == 0
+
+def test_balance_2(test_tree):
+    pass
