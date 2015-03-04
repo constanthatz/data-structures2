@@ -53,3 +53,24 @@ class Tree(object):
             count += 1
             count = self._size(leaf.right, count)
         return count
+
+    def depth(self):
+        if not self.root:
+            return 0
+        else:
+            return self._depth(self.root)
+
+    def _depth(self, leaf):
+        if leaf is None:
+            return 0
+        else:
+            depthL = self._depth(leaf.left)
+            depthR = self._depth(leaf.right)
+        return max([depthL, depthR]) + 1
+
+if __name__ == '__main__':
+    t = Tree()
+    t.insert(10)
+    t.insert(15)
+    t.insert(5)
+    print(t.size)
