@@ -61,7 +61,7 @@ class Tree(object):
         if not self.root:
             return 0
         else:
-            return self._depth(self.root)
+            return max(self._depth(self.root))+1
 
     def _depth(self, leaf):
         if leaf is None:
@@ -69,7 +69,13 @@ class Tree(object):
         else:
             depthL = self._depth(leaf.left)
             depthR = self._depth(leaf.right)
+        if leaf == self.root:
+            return depthL, depthR
         return max([depthL, depthR]) + 1
+
+    def balance(self):
+        depthL, depthR = self._depth(self.root)
+        return depthL - depthR
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
@@ -98,6 +104,7 @@ class Tree(object):
             r = random.randint(0, 1e9)
             yield "\tnull%s [shape=point];" % r
             yield "\t%s -> null%s;" % (self.key, r)
+    
 
 if __name__ == '__main__':
     t = Tree()
