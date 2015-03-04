@@ -12,20 +12,16 @@ class Tree(object):
     def __init__(self, root=None):
         self.root = root
 
-    def search(self, key, leaf):
+    def _contains(self, key, leaf):
         if leaf is None or leaf.key == key:
-            return leaf
+            return bool(leaf)
         elif key < leaf.key:
-            return self.search(key, leaf.left)
+            return self._contains(key, leaf.left)
         else:
-            return self.search(key, leaf.right)
+            return self._contains(key, leaf.right)
 
     def contains(self, key):
-        result = self.search(key, self.root)
-        if result is None:
-            return False
-        else:
-            return True
+        return self._contains(key, self.root)
 
     def insert(self, key):
         if not self.root:
@@ -42,3 +38,5 @@ class Tree(object):
             return Leaf(leaf.key, self.insert(key, leaf.left), leaf.right)
         else:
             return Leaf(leaf.key, leaf.left, self.insert(key, leaf.right))
+
+    
