@@ -8,6 +8,25 @@ class Leaf(object):
         self.key = key
         self.right = right
 
+    def _get_dot(self):
+        """recursively prepare a dot graph entry for this node."""
+        if self.left is not None:
+            yield "\t%s -> %s;" % (self.key, self.left.key)
+            for i in self.left._get_dot():
+                yield i
+        elif self.right is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (self.key, r)
+        if self.right is not None:
+            yield "\t%s -> %s;" % (self.key, self.right.key)
+            for i in self.right._get_dot():
+                yield i
+        elif self.left is not None:
+            r = random.randint(0, 1e9)
+            yield "\tnull%s [shape=point];" % r
+            yield "\t%s -> null%s;" % (self.key, r)
+
 
 class Tree(object):
     '''Create tree'''
@@ -79,32 +98,12 @@ class Tree(object):
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
-        return "digraph G{\n%s}" % ("" if self.key is None else (
+        return "digraph G{\n%s}" % ("" if self.root.key is None else (
             "\t%s;\n%s\n" % (
-                self.key,
-                "\n".join(self._get_dot())
+                self.root.key,
+                "\n".join(self.root._get_dot())
             )
         ))
-
-    def _get_dot(self):
-        """recursively prepare a dot graph entry for this node."""
-        if self.left is not None:
-            yield "\t%s -> %s;" % (self.key, self.left.key)
-            for i in self.left._get_dot():
-                yield i
-        elif self.right is not None:
-            r = random.randint(0, 1e9)
-            yield "\tnull%s [shape=point];" % r
-            yield "\t%s -> null%s;" % (self.key, r)
-        if self.right is not None:
-            yield "\t%s -> %s;" % (self.key, self.right.key)
-            for i in self.right._get_dot():
-                yield i
-        elif self.left is not None:
-            r = random.randint(0, 1e9)
-            yield "\tnull%s [shape=point];" % r
-            yield "\t%s -> null%s;" % (self.key, r)
-    
 
 if __name__ == '__main__':
     t = Tree()
