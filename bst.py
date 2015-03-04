@@ -11,11 +11,16 @@ class Tree(object):
     def __init__(self, root=None):
         self.root = root
 
-    def search(self, value):
-        pass
+    def search(self, value, leaf):
+        if leaf is None or leaf.value == value:
+            return leaf
+        elif value < leaf.key:
+            return search(value, leaf.left)
+        else:
+            return search(value, leaf.right)
 
     def insert(self, value):
 
-        if self.root is None:
+        if node is None:
             self.root = Leaf(value=value)
         elif 
