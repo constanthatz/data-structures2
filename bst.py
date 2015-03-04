@@ -39,4 +39,17 @@ class Tree(object):
         else:
             return Leaf(leaf.key, leaf.left, self.insert(key, leaf.right))
 
-    
+    def size(self):
+        if not self.root:
+            return 0
+        else:
+            return self._size(self.root, 1)
+
+    def _size(self, leaf, count):
+        if leaf.left:
+            count += 1
+            count = self._size(leaf.left, count)
+        if leaf.right:
+            count += 1
+            count = self._size(leaf.right, count)
+        return count
