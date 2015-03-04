@@ -1,8 +1,8 @@
 class Leaf(object):
     '''Create leaf.'''
-    def __init__(self, left=None, value=None, right=None):
+    def __init__(self, key, left=None, right=None):
         self.left = left
-        self.value = value
+        self.key = key
         self.right = right
 
 
@@ -11,16 +11,27 @@ class Tree(object):
     def __init__(self, root=None):
         self.root = root
 
-    def search(self, value, leaf):
-        if leaf is None or leaf.value == value:
+    def search(self, key, leaf):
+        if leaf is None or leaf.key == key:
             return leaf
-        elif value < leaf.key:
-            return search(value, leaf.left)
+        elif key < leaf.key:
+            return self.search(key, leaf.left)
         else:
-            return search(value, leaf.right)
+            return self.search(key, leaf.right)
 
-    def insert(self, value):
+    def contains(self, key):
+        result = self.search(key, self.root)
+        if result is None:
+            return False
+        else:
+            return True
 
-        if node is None:
-            self.root = Leaf(value=value)
-        elif 
+    def insert(self, key, leaf):
+        if leaf is None:
+            return Leaf(key)
+        elif key == leaf.key:
+            return Leaf()
+        elif key < leaf.key:
+            return Leaf(leaf.key, self.insert(key, leaf.left), leaf.right)
+        else:
+            return Leaf(leaf.key, leaf.left, self.insert(key, leaf.right))
