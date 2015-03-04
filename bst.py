@@ -1,13 +1,16 @@
 class Leaf(object):
     '''Create leaf.'''
-    def __init__(self, left=None, key=None, value=None, right=None):
+    def __init__(self, left=None, value=None, right=None):
         self.left = left
-        self.key = key
         self.value = value
         self.right = right
 
 
 class Tree(object):
     '''Create tree'''
-    def __init__(self):
-        self.root = None
+    def __init__(self, root=None):
+        self.root = root
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = Leaf(value=value)
