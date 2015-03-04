@@ -8,6 +8,7 @@ class Leaf(object):
 
 class Tree(object):
     '''Create tree'''
+
     def __init__(self, root=None):
         self.root = root
 
@@ -26,11 +27,17 @@ class Tree(object):
         else:
             return True
 
-    def insert(self, key, leaf):
+    def insert(self, key):
+        if not self.root:
+            self.root = Leaf(key)
+        else:
+            self._insert(key, self.root)
+
+    def _insert(self, key, leaf):
         if leaf is None:
             return Leaf(key)
         elif key == leaf.key:
-            return Leaf()
+            return Leaf(key, leaf.left, leaf.right)
         elif key < leaf.key:
             return Leaf(leaf.key, self.insert(key, leaf.left), leaf.right)
         else:
