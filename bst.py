@@ -1,5 +1,5 @@
 import random
-
+import numpy.random as nprnd
 
 class Leaf(object):
     '''Create leaf.'''
@@ -106,8 +106,24 @@ class Tree(object):
         ))
 
 if __name__ == '__main__':
-    t = Tree()
-    t.insert(10)
-    t.insert(15)
-    t.insert(5)
-    print(t.size)
+    import timeit
+
+    def test_contains_easy():
+        nums = nprnd.randint(100, size=100)
+        t = Tree()
+        t.insert(50)
+        t.insert(49.5)
+        for i in nums:
+            t.insert(i)
+        t.contains(49.5)
+
+    def test_contains_hard():
+        nums = nprnd.randint(100, size=100)
+        t = Tree()
+        t.insert(50)
+        for i in nums:
+            t.insert(i)
+        t.contains(nums[50])
+
+    print(timeit.Timer("test_contains_easy()", setup="from __main__ import test_contains_easy").timeit(number=1000))
+    print(timeit.Timer("test_contains_hard()", setup="from __main__ import test_contains_hard").timeit(number=1000))
