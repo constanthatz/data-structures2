@@ -3,6 +3,7 @@ import numpy.random as nprnd
 from Queue import Queue
 
 
+
 class Leaf(object):
     '''Create leaf.'''
     def __init__(self, key, left=None, right=None):
@@ -166,26 +167,47 @@ class Tree(object):
 if __name__ == '__main__':
     import timeit
 
-    nums = nprnd.randint(100, size=1000)
-    nums = sorted(nums)
-    t = Tree()
-    t.insert(50)
-    t.insert(49.9)
-    for i in nums:
-        t.insert(i)
-    print(t.depth())
+    nums = []
+    nums.append(range(0, 5))
+    nums.append(range(0, 50))
+    nums.append(range(0, 500))
 
-    def test_contains_easy():
-        t.contains(49.9)
+    for item in nums:
+        num = item
 
-    def test_contains_hard():
-        t.contains(1000)
+        def makeBalancedTree(num):
+            return makeBalance(num, 0, len(num)-1)
 
-    best_case = 'Best Case, Searching for Leaf at Depth 1: {}'
-    worst_case = 'Worst Case, Searching for Leaf Not in Tree: {}'
-    print(best_case.format(timeit.Timer(
-        "test_contains_easy()",
-        setup="from __main__ import test_contains_easy").timeit(number=1000)))
-    print(worst_case.format(timeit.Timer(
-        "test_contains_hard()",
-        setup="from __main__ import test_contains_hard").timeit(number=1000)))
+        def makeBalance(num, begin, end):
+            if begin > end:
+                return None
+            midPoint = (begin+end)//2
+            root = Leaf(num[midPoint])
+            root.left = makeBalance(num, begin, midPoint-1)
+            root.right = makeBalance(num, midPoint+1, end)
+            return root
+
+        T_easy = Tree(makeBalancedTree(num))
+        T_hard = Tree()
+        for i in num:
+            T_hard.insert(i)
+
+        def test_contains_easy():
+            T_easy.contains(num[-1])
+
+        def test_contains_hard():
+            T_hard.contains(num[-1])
+
+        best_case = '{:10.10f} s : Best Case,  Balanced,   Leaves {},  Depth {}'
+        worst_case = '{:10.10f} s : Worst Case, Unbalanced, Leaves {},  Depth {}'
+        time_easy = timeit.Timer(
+            "test_contains_easy()",
+            setup="from __main__ import test_contains_easy").timeit(number=10000)
+        time_hard = timeit.Timer(
+            "test_contains_hard()",
+            setup="from __main__ import test_contains_hard").timeit(number=10000)
+
+        print(best_case.format(time_easy, len(num), T_easy.depth()))
+        print(worst_case.format(time_hard, len(num), T_hard.depth()))
+        print('{} times slower'.format(float(time_hard)/float(time_easy)))
+        print('\n')
