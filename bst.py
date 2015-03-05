@@ -27,17 +27,21 @@ class Tree(object):
         if not self.root:
             self.root = Leaf(key)
         else:
-            self.root = self._insert(key, self.root)
+            self._insert(key, self.root)
 
     def _insert(self, key, leaf):
-        if leaf is None:
-            return Leaf(key)
-        elif key == leaf.key:
-            return Leaf(key, leaf.left, leaf.right)
+        if key == leaf.key:
+            return
         elif key < leaf.key:
-            return Leaf(leaf.key, self._insert(key, leaf.left), leaf.right)
+            if leaf.left:
+                self._insert(key, leaf.left)
+            else:
+                leaf.left = Leaf(key)
         else:
-            return Leaf(leaf.key, leaf.left, self._insert(key, leaf.right))
+            if leaf.right:
+                self._insert(key, leaf.right)
+            else:
+                leaf.right = Leaf(key)
 
     def size(self):
         if not self.root:

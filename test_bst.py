@@ -56,6 +56,11 @@ def test_size(test_tree):
     assert test_tree.size() == 3
 
 
+def test_insert_already_present(test_tree):
+    test_tree.insert(4)
+    assert test_tree.size() == 3
+
+
 def test_size_large(test_tree_large):
     assert test_tree_large.size() == 9
 
