@@ -109,6 +109,45 @@ class Tree(object):
             )
         ))
 
+    ## TODO: add handling for stop iteration
+
+    def in_order(self):
+        return self._in_order(self.root)
+
+    def _in_order(self, leaf):
+        if leaf is None:
+            return
+        for val in self._in_order(leaf.left):
+            yield val
+        yield(leaf.key)
+        for val in self._in_order(leaf.right):
+            yield val
+
+    def pre_order(self):
+        return self._pre_order(self.root)
+
+    def _pre_order(self, leaf):
+        if leaf is None:
+            return
+        yield(leaf.key)
+        for val in self._in_order(leaf.left):
+            yield val
+        for val in self._in_order(leaf.right):
+            yield val
+
+    def post_order(self):
+        return self._post_order(self.root)
+
+    def _post_order(self, leaf):
+        if leaf is None:
+            return
+        for val in self._in_order(leaf.left):
+            yield val
+        for val in self._in_order(leaf.right):
+            yield val
+        yield(leaf.key)
+
+
 if __name__ == '__main__':
     import timeit
 
