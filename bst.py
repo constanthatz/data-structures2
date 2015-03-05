@@ -211,3 +211,6 @@ if __name__ == '__main__':
         print(worst_case.format(time_hard, len(num), T_hard.depth()))
         print('{} times slower'.format(float(time_hard)/float(time_easy)))
         print('\n')
+
+
+    

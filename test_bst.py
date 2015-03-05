@@ -96,3 +96,9 @@ def test_balance_positive():
     test_tree.insert(5)
     test_tree.insert(4)
     assert test_tree.balance() > 0
+
+
+def test_breadth_first_traversal(test_tree_large):
+    expected = [10, 2, 12, 1, 3, 14]
+    for i, val in enumerate(test_tree_large.breadth_first_traversal()):
+        assert val == expected[i]
