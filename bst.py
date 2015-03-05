@@ -112,22 +112,31 @@ class Tree(object):
 if __name__ == '__main__':
     import timeit
 
+    nums = nprnd.randint(100, size=1000)
+    nums = sorted(nums)
+
     def test_contains_easy():
-        nums = nprnd.randint(100, size=100)
         t = Tree()
         t.insert(50)
-        t.insert(49.5)
+        t.insert(49.9)
         for i in nums:
             t.insert(i)
-        t.contains(49.5)
+        t.contains(49.9)
 
     def test_contains_hard():
-        nums = nprnd.randint(100, size=100)
+        nums = nprnd.randint(100, size=1000)
+        nums = sorted(nums)
         t = Tree()
         t.insert(50)
         for i in nums:
             t.insert(i)
-        t.contains(nums[50])
+        t.contains(nums[-1])
 
-    print(timeit.Timer("test_contains_easy()", setup="from __main__ import test_contains_easy").timeit(number=1000))
-    print(timeit.Timer("test_contains_hard()", setup="from __main__ import test_contains_hard").timeit(number=1000))
+    best_case = 'Best Case, Searching for Leaf at Depth 1: {}'
+    worst_case = 'Worst Case, Searching for Leaf at Maximum Depth: {}'
+    print(best_case.format(timeit.Timer(
+        "test_contains_easy()",
+        setup="from __main__ import test_contains_easy").timeit(number=1000)))
+    print(worst_case.format(timeit.Timer(
+        "test_contains_hard()",
+        setup="from __main__ import test_contains_hard").timeit(number=1000)))
