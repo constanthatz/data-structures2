@@ -114,23 +114,17 @@ if __name__ == '__main__':
 
     nums = nprnd.randint(100, size=1000)
     nums = sorted(nums)
+    t = Tree()
+    t.insert(50)
+    t.insert(49.9)
+    for i in nums:
+        t.insert(i)
+    print(t.depth())
 
     def test_contains_easy():
-        t = Tree()
-        t.insert(50)
-        t.insert(49.9)
-        t.depth
-        for i in nums:
-            t.insert(i)
         t.contains(49.9)
 
     def test_contains_hard():
-        nums = nprnd.randint(100, size=1000)
-        nums = sorted(nums)
-        t = Tree()
-        t.insert(50)
-        for i in nums:
-            t.insert(i)
         t.contains(1000)
 
     best_case = 'Best Case, Searching for Leaf at Depth 1: {}'
