@@ -1,5 +1,7 @@
 import random
 import numpy.random as nprnd
+from Queue import Queue
+
 
 class Leaf(object):
     '''Create leaf.'''
@@ -109,8 +111,6 @@ class Tree(object):
             )
         ))
 
-    ## TODO: add handling for stop iteration
-
     def in_order(self):
         return self._in_order(self.root)
 
@@ -146,6 +146,21 @@ class Tree(object):
         for val in self._in_order(leaf.right):
             yield val
         yield(leaf.key)
+
+    def breadth_first_traversal(self):
+        q = Queue()
+        q.put(self.root)
+        while not q.empty:
+            leaf = q.get()
+            yield leaf.key
+            if leaf.left:
+                q.put(leaf.left)
+            if leaf.right:
+                q.put(leaf.right)
+
+
+
+
 
 
 if __name__ == '__main__':
