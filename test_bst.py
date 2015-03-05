@@ -99,6 +99,24 @@ def test_balance_positive():
 
 
 def test_breadth_first_traversal(test_tree_large):
-    expected = [10, 2, 12, 1, 3, 14]
+    expected = [5, 4, 8, 2, 10, 1, 3, 12, 14]
     for i, val in enumerate(test_tree_large.breadth_first_traversal()):
+        assert val == expected[i]
+
+
+def test_in_order(test_tree_large):
+    expected = [1, 2, 3, 4, 5, 8, 10, 12, 14]
+    for i, val in enumerate(test_tree_large.in_order()):
+        assert val == expected[i]
+
+
+def test_pre_order(test_tree_large):
+    expected = [5, 4, 2, 1, 3, 8, 10, 12, 14]
+    for i, val in enumerate(test_tree_large.pre_order()):
+        assert val == expected[i]
+
+
+def test_post_order(test_tree_large):
+    expected = [1, 3, 2, 4, 14, 12, 10, 8, 5]
+    for i, val in enumerate(test_tree_large.post_order()):
         assert val == expected[i]

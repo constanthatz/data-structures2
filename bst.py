@@ -120,7 +120,7 @@ class Tree(object):
             return
         for val in self._in_order(leaf.left):
             yield val
-        yield(leaf.key)
+        yield leaf.key
         for val in self._in_order(leaf.right):
             yield val
 
@@ -130,10 +130,10 @@ class Tree(object):
     def _pre_order(self, leaf):
         if leaf is None:
             return
-        yield(leaf.key)
-        for val in self._in_order(leaf.left):
+        yield leaf.key
+        for val in self._pre_order(leaf.left):
             yield val
-        for val in self._in_order(leaf.right):
+        for val in self._pre_order(leaf.right):
             yield val
 
     def post_order(self):
@@ -142,26 +142,22 @@ class Tree(object):
     def _post_order(self, leaf):
         if leaf is None:
             return
-        for val in self._in_order(leaf.left):
+        for val in self._post_order(leaf.left):
             yield val
-        for val in self._in_order(leaf.right):
+        for val in self._post_order(leaf.right):
             yield val
-        yield(leaf.key)
+        yield leaf.key
 
     def breadth_first_traversal(self):
         q = Queue()
         q.put(self.root)
-        while not q.empty:
+        while not q.empty():
             leaf = q.get()
             yield leaf.key
             if leaf.left:
                 q.put(leaf.left)
             if leaf.right:
                 q.put(leaf.right)
-
-
-
-
 
 
 if __name__ == '__main__':
@@ -213,4 +209,3 @@ if __name__ == '__main__':
         print('\n')
 
 
-    
