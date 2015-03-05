@@ -119,6 +119,7 @@ if __name__ == '__main__':
         t = Tree()
         t.insert(50)
         t.insert(49.9)
+        t.depth
         for i in nums:
             t.insert(i)
         t.contains(49.9)
@@ -130,10 +131,10 @@ if __name__ == '__main__':
         t.insert(50)
         for i in nums:
             t.insert(i)
-        t.contains(nums[-1])
+        t.contains(1000)
 
     best_case = 'Best Case, Searching for Leaf at Depth 1: {}'
-    worst_case = 'Worst Case, Searching for Leaf at Maximum Depth: {}'
+    worst_case = 'Worst Case, Searching for Leaf Not in Tree: {}'
     print(best_case.format(timeit.Timer(
         "test_contains_easy()",
         setup="from __main__ import test_contains_easy").timeit(number=1000)))
