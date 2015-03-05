@@ -1,7 +1,5 @@
 import random
-import numpy.random as nprnd
 from Queue import Queue
-
 
 
 class Leaf(object):
