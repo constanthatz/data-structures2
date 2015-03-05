@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/constanthatz/data-structures2.svg?branch=master)](https://travis-ci.org/constanthatz/data-structures2)  
+
 # data-structures2
 
 A collection of data structure implementations in python.
