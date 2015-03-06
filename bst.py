@@ -166,8 +166,7 @@ if __name__ == '__main__':
     nums.append(range(0, 50))
     nums.append(range(0, 500))
 
-    for item in nums:
-        num = item
+    for num in nums:
 
         def makeBalancedTree(num):
             return makeBalance(num, 0, len(num)-1)
