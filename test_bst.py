@@ -87,8 +87,19 @@ def test_balance(test_tree):
     assert test_tree.balance() == 0
 
 
+def test_balance_negative_exact(test_tree_large):
+    assert test_tree_large.balance() == -1
+
+
 def test_balance_negative(test_tree_large):
     assert test_tree_large.balance() < 0
+
+
+def test_balance_positive_exact():
+    test_tree = Tree()
+    test_tree.insert(5)
+    test_tree.insert(4)
+    assert test_tree.balance() == 1
 
 
 def test_balance_positive():
@@ -96,6 +107,10 @@ def test_balance_positive():
     test_tree.insert(5)
     test_tree.insert(4)
     assert test_tree.balance() > 0
+
+
+def test_breadth_first_traversal_generator(test_tree_large):
+    assert test_tree_large.breadth_first_traversal().next() == 5
 
 
 def test_breadth_first_traversal(test_tree_large):
@@ -109,6 +124,10 @@ def test_breadth_first_traversal(test_tree_large):
         actual.next()
 
 
+def test_in_order_generator(test_tree_large):
+    assert test_tree_large.in_order().next() == 1
+
+
 def test_in_order(test_tree_large):
     expected = [1, 2, 3, 4, 5, 8, 10, 12, 14]
     actual = test_tree_large.in_order()
@@ -118,6 +137,10 @@ def test_in_order(test_tree_large):
         actual.next()
 
 
+def test_pre_order_generator(test_tree_large):
+    assert test_tree_large.pre_order().next() == 5
+
+
 def test_pre_order(test_tree_large):
     expected = [5, 4, 2, 1, 3, 8, 10, 12, 14]
     actual = test_tree_large.pre_order()
@@ -125,6 +148,10 @@ def test_pre_order(test_tree_large):
         assert val == actual.next()
     with pytest.raises(StopIteration):
         actual.next()
+
+
+def test_post_order_generator(test_tree_large):
+    assert test_tree_large.post_order().next() == 1
 
 
 def test_post_order(test_tree_large):
