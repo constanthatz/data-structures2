@@ -67,13 +67,13 @@ class Tree(object):
             else:
                 leaf.right = Leaf(key, parent=leaf)
 
-    def find_replacement(self, leaf):
+    def _find_replacement(self, leaf):
         current = leaf
-        while current.left:
-            current = current.left
+        while current.right:
+            current = current.right
         return current
 
-    def remove_node(self, leaf, replacement_leaf=None):
+    def _remove_node(self, leaf, replacement_leaf=None):
         if leaf.parent:
             if leaf.parent.left == leaf:
                 leaf.parent.left = leaf.left
@@ -87,17 +87,17 @@ class Tree(object):
 
     def _delete(self, target, start):
         leaf = self._contains(target, start)
-        if leaf.left and leaf.right:
-            successor = self.find_replacement(leaf.right)
-            leaf.key = successor.key
-            self.delete(successor.key, successor)
-        elif leaf.left:
-            self.remove_node(leaf, leaf.left)
-        elif leaf.right:
-            self.remove_node(leaf, leaf.right)
-        else:
-            self.remove_node(leaf)
-
+        if leaf:
+            if leaf.left and leaf.right:
+                successor = self._find_replacement(leaf.left)
+                leaf.key = successor.key
+                self._delete(successor.key, successor)
+            elif leaf.left:
+                self._remove_node(leaf, leaf.left)
+            elif leaf.right:
+                self._remove_node(leaf, leaf.right)
+            else:
+                self._remove_node(leaf)
 
     def size(self):
         if not self.root:
