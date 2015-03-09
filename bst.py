@@ -76,9 +76,9 @@ class Tree(object):
     def remove_node(self, leaf, replacement_leaf=None):
         if leaf.parent:
             if leaf.parent.left == leaf:
-                leaf.parent.left == leaf.left
+                leaf.parent.left = leaf.left
             else:
-                leaf.parent.right == leaf.right
+                leaf.parent.right = leaf.right
         if replacement_leaf:
             replacement_leaf.parent = leaf.parent
 

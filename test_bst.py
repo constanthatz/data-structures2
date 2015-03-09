@@ -154,7 +154,7 @@ def test_delete(test_tree):
     actual = test_tree.in_order()
     for val in expected:
         assert val == actual.next()
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     with pytest.raises(StopIteration):
         actual.next()
     assert not test_tree.contains(8)
