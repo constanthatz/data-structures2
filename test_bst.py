@@ -24,6 +24,24 @@ def test_tree_large(test_tree):
     return test_tree
 
 
+@pytest.fixture(scope="function")
+def test_tree_delete():
+    test_tree = Tree()
+    test_tree.insert(10)
+    test_tree.insert(2)
+    test_tree.insert(14)
+    test_tree.insert(15)
+    test_tree.insert(16)
+    test_tree.insert(13)
+    test_tree.insert(12)
+    test_tree.insert(3)
+    test_tree.insert(4)
+    test_tree.insert(1)
+    test_tree.insert(0.5)
+
+    return test_tree
+
+
 def test_insert_as_root():
     test_tree = Tree()
     test_tree.insert(5)
@@ -141,6 +159,58 @@ def test_pre_order(test_tree_large):
 def test_post_order(test_tree_large):
     expected = [1, 3, 2, 4, 14, 12, 10, 8, 5]
     actual = test_tree_large.post_order()
+    for val in expected:
+        assert val == actual.next()
+    with pytest.raises(StopIteration):
+        actual.next()
+
+
+def in_order_tester(value, tree):
+    expected = [0.5, 1, 2, 3, 4, 10, 12, 13, 14, 15, 16]
+    expected.remove(value)
+    tree.delete(value)
+    assert not tree.contains(value)
+    actual = tree.in_order()
+    for val in expected:
+        assert val == actual.next()
+    with pytest.raises(StopIteration):
+        actual.next()
+
+
+def test_delete_root(test_tree_delete):
+    in_order_tester(10, test_tree_delete)
+    assert test_tree_delete.root.key == 4
+
+
+def test_delete_two_children_left(test_tree_delete):
+    in_order_tester(2, test_tree_delete)
+    assert test_tree_delete.root.left.key == 1
+
+
+def test_delete_two_children_right(test_tree_delete):
+    in_order_tester(14, test_tree_delete)
+    assert test_tree_delete.root.right.key == 13
+
+
+def test_delete_one_child_left(test_tree_delete):
+    in_order_tester(1, test_tree_delete)
+    assert test_tree_delete.root.left.left.key == 0.5
+
+
+def test_delete_one_child_right(test_tree_delete):
+    in_order_tester(15, test_tree_delete)
+    assert test_tree_delete.root.right.right.key == 16
+
+
+def test_delete_no_children(test_tree_delete):
+    in_order_tester(16, test_tree_delete)
+    assert test_tree_delete.root.right.right.right is None
+
+
+def test_delete_not_present(test_tree):
+    test_tree.delete(99)
+    expected = [4, 5, 8]
+    actual = test_tree.in_order()
     for val in expected:
         assert val == actual.next()
     with pytest.raises(StopIteration):

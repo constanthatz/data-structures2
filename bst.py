@@ -4,10 +4,11 @@ from Queue import Queue
 
 class Leaf(object):
     '''Create leaf.'''
-    def __init__(self, key, left=None, right=None):
+    def __init__(self, key, left=None, right=None, parent=None):
         self.left = left
         self.key = key
         self.right = right
+        self.parent = parent
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
@@ -37,14 +38,14 @@ class Tree(object):
 
     def _contains(self, key, leaf):
         if leaf is None or leaf.key == key:
-            return bool(leaf)
+            return leaf
         elif key < leaf.key:
             return self._contains(key, leaf.left)
         else:
             return self._contains(key, leaf.right)
 
     def contains(self, key):
-        return self._contains(key, self.root)
+        return bool(self._contains(key, self.root))
 
     def insert(self, key):
         if not self.root:
@@ -59,12 +60,44 @@ class Tree(object):
             if leaf.left:
                 self._insert(key, leaf.left)
             else:
-                leaf.left = Leaf(key)
+                leaf.left = Leaf(key, parent=leaf)
         else:
             if leaf.right:
                 self._insert(key, leaf.right)
             else:
-                leaf.right = Leaf(key)
+                leaf.right = Leaf(key, parent=leaf)
+
+    def _find_replacement(self, leaf):
+        current = leaf
+        while current.right:
+            current = current.right
+        return current
+
+    def _remove_node(self, leaf, replacement_leaf=None):
+        if leaf.parent:
+            if leaf.parent.left == leaf:
+                leaf.parent.left = leaf.left
+            else:
+                leaf.parent.right = leaf.right
+        if replacement_leaf:
+            replacement_leaf.parent = leaf.parent
+
+    def delete(self, target):
+        self._delete(target, self.root)
+
+    def _delete(self, target, start):
+        leaf = self._contains(target, start)
+        if leaf:
+            if leaf.left and leaf.right:
+                successor = self._find_replacement(leaf.left)
+                leaf.key = successor.key
+                self._delete(successor.key, successor)
+            elif leaf.left:
+                self._remove_node(leaf, leaf.left)
+            elif leaf.right:
+                self._remove_node(leaf, leaf.right)
+            else:
+                self._remove_node(leaf)
 
     def size(self):
         if not self.root:
