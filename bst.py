@@ -1,5 +1,5 @@
 import random
-import numpy.random as nprnd
+from Queue import Queue
 
 
 class Leaf(object):
@@ -110,6 +110,54 @@ class Tree(object):
             )
         ))
 
+    def in_order(self):
+        return self._in_order(self.root)
+
+    def _in_order(self, leaf):
+        if leaf is None:
+            return
+        for val in self._in_order(leaf.left):
+            yield val
+        yield leaf.key
+        for val in self._in_order(leaf.right):
+            yield val
+
+    def pre_order(self):
+        return self._pre_order(self.root)
+
+    def _pre_order(self, leaf):
+        if leaf is None:
+            return
+        yield leaf.key
+        for val in self._pre_order(leaf.left):
+            yield val
+        for val in self._pre_order(leaf.right):
+            yield val
+
+    def post_order(self):
+        return self._post_order(self.root)
+
+    def _post_order(self, leaf):
+        if leaf is None:
+            return
+        for val in self._post_order(leaf.left):
+            yield val
+        for val in self._post_order(leaf.right):
+            yield val
+        yield leaf.key
+
+    def breadth_first_traversal(self):
+        q = Queue()
+        q.put(self.root)
+        while not q.empty():
+            leaf = q.get()
+            yield leaf.key
+            if leaf.left:
+                q.put(leaf.left)
+            if leaf.right:
+                q.put(leaf.right)
+
+
 if __name__ == '__main__':
     import timeit
 
@@ -118,8 +166,7 @@ if __name__ == '__main__':
     nums.append(range(0, 50))
     nums.append(range(0, 500))
 
-    for item in nums:
-        num = item
+    for num in nums:
 
         def makeBalancedTree(num):
             return makeBalance(num, 0, len(num)-1)
@@ -144,14 +191,16 @@ if __name__ == '__main__':
         def test_contains_hard():
             T_hard.contains(num[-1])
 
-        best_case = '{:10.10f} s : Best Case,  Balanced,   Leaves {},  Depth {}'
-        worst_case = '{:10.10f} s : Worst Case, Unbalanced, Leaves {},  Depth {}'
+        best_case = '{:10.10f}s :Best Case,  Balanced,   Leaves {},  Depth {}'
+        worst_case = '{:10.10f}s :Worst Case, Unbalanced, Leaves {},  Depth {}'
         time_easy = timeit.Timer(
             "test_contains_easy()",
-            setup="from __main__ import test_contains_easy").timeit(number=10000)
+            setup="from __main__ import test_contains_easy").timeit(
+            number=10000)
         time_hard = timeit.Timer(
             "test_contains_hard()",
-            setup="from __main__ import test_contains_hard").timeit(number=10000)
+            setup="from __main__ import test_contains_hard").timeit(
+            number=10000)
 
         print(best_case.format(time_easy, len(num), T_easy.depth()))
         print(worst_case.format(time_hard, len(num), T_hard.depth()))
