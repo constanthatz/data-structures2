@@ -191,18 +191,18 @@ if __name__ == '__main__':
         def test_contains_hard():
             T_hard.contains(num[-1])
 
-        best_case = '{:10.10f} s : Best Case,  Balanced,   Leaves {},  Depth {}'
-        worst_case = '{:10.10f} s : Worst Case, Unbalanced, Leaves {},  Depth {}'
+        best_case = '{:10.10f}s :Best Case,  Balanced,   Leaves {},  Depth {}'
+        worst_case = '{:10.10f}s :Worst Case, Unbalanced, Leaves {},  Depth {}'
         time_easy = timeit.Timer(
             "test_contains_easy()",
-            setup="from __main__ import test_contains_easy").timeit(number=10000)
+            setup="from __main__ import test_contains_easy").timeit(
+            number=10000)
         time_hard = timeit.Timer(
             "test_contains_hard()",
-            setup="from __main__ import test_contains_hard").timeit(number=10000)
+            setup="from __main__ import test_contains_hard").timeit(
+            number=10000)
 
         print(best_case.format(time_easy, len(num), T_easy.depth()))
         print(worst_case.format(time_hard, len(num), T_hard.depth()))
         print('{} times slower'.format(float(time_hard)/float(time_easy)))
         print('\n')
-
-
