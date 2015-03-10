@@ -202,6 +202,25 @@ class Tree(object):
         png_file.close()
         os.system('open bst.png')
 
+    def nuclear_option(self):
+        generator = self.in_order()
+        num = []
+        generating = True
+        while generating:
+            try:
+                num.append(generator.next())
+            except StopIteration:
+                self.root = self._nuclear_option(num, 0, len(num)-1)
+
+    def _nuclear_option(self, num, begin, end):
+        if begin > end:
+            return None
+        midPoint = (begin+end)//2
+        root = Leaf(num[midPoint])
+        root.left = self._nuclear_option(num, begin, midPoint-1)
+        root.right = self._nuclear_option(num, midPoint+1, end)
+        return root
+
 if __name__ == '__main__':
 
     def makeBalancedTree(num):
