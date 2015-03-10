@@ -194,13 +194,13 @@ class Tree(object):
             )
         ))
 
-    def graph(self):
+    def graph(self, file_name):
         t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         png_data = t.communicate(self.get_dot())
-        png_file = open('bst.png', 'w')
+        png_file = open('{}.png'.format(file_name), 'w')
         png_file.write(png_data[0])
         png_file.close()
-        os.system('open bst.png')
+        os.system('open {}.png'.format(file_name))
 
     def nuclear_option(self):
         generator = self.in_order()
@@ -270,6 +270,6 @@ if __name__ == '__main__':
                 print('{} times slower'.format(float(time_hard)/float(time_easy)))
                 print('\n')
         elif sys.argv[1] == 'g':
-            sample = range(0, 15)
+            sample = range(0, 37)
             T = Tree(makeBalancedTree(sample))
-            T.graph()
+            T.graph('bst')

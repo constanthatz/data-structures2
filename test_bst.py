@@ -42,6 +42,24 @@ def test_tree_delete():
     return test_tree
 
 
+@pytest.fixture(scope="function")
+def test_tree_unblanced():
+    test_tree = Tree()
+    test_tree.insert(1)
+    test_tree.insert(2)
+    test_tree.insert(10)
+    test_tree.insert(12)
+    test_tree.insert(13)
+    test_tree.insert(14)
+    test_tree.insert(15)
+    test_tree.insert(16)
+    test_tree.insert(3)
+    test_tree.insert(4)
+    test_tree.insert(0.5)
+
+    return test_tree
+
+
 def test_insert_as_root():
     test_tree = Tree()
     test_tree.insert(5)
@@ -215,3 +233,9 @@ def test_delete_not_present(test_tree):
         assert val == actual.next()
     with pytest.raises(StopIteration):
         actual.next()
+
+
+def test_nuclear_option(test_tree_unblanced):
+    test_tree_unblanced.graph()
+    test_tree_unblanced.nuclear_option
+
