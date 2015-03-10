@@ -1,5 +1,9 @@
 import random
 from Queue import Queue
+import timeit
+import subprocess
+import sys
+import os
 
 
 class Leaf(object):
@@ -134,15 +138,6 @@ class Tree(object):
         depthL, depthR = self._depth(self.root)
         return depthL - depthR
 
-    def get_dot(self):
-        """return the tree with root 'self' as a dot graph for visualization"""
-        return "digraph G{\n%s}" % ("" if self.root.key is None else (
-            "\t%s;\n%s\n" % (
-                self.root.key,
-                "\n".join(self.root._get_dot())
-            )
-        ))
-
     def in_order(self):
         return self._in_order(self.root)
 
@@ -190,52 +185,66 @@ class Tree(object):
             if leaf.right:
                 q.put(leaf.right)
 
+    def get_dot(self):
+        """return the tree with root 'self' as a dot graph for visualization"""
+        return "digraph G{\n%s}" % ("" if self.root.key is None else (
+            "\t%s;\n%s\n" % (
+                self.root.key,
+                "\n".join(self.root._get_dot())
+            )
+        ))
+
 
 if __name__ == '__main__':
-    import timeit
 
-    nums = []
-    nums.append(range(0, 5))
-    nums.append(range(0, 50))
-    nums.append(range(0, 500))
+    def makeBalancedTree(num):
+        return makeBalance(num, 0, len(num)-1)
 
-    for num in nums:
+    def makeBalance(num, begin, end):
+        if begin > end:
+            return None
+        midPoint = (begin+end)//2
+        root = Leaf(num[midPoint])
+        root.left = makeBalance(num, begin, midPoint-1)
+        root.right = makeBalance(num, midPoint+1, end)
+        return root
 
-        def makeBalancedTree(num):
-            return makeBalance(num, 0, len(num)-1)
+    if len(sys.argv) > 1:
+        nums = []
+        nums.append(range(0, 5))
+        nums.append(range(0, 50))
+        nums.append(range(0, 500))
 
-        def makeBalance(num, begin, end):
-            if begin > end:
-                return None
-            midPoint = (begin+end)//2
-            root = Leaf(num[midPoint])
-            root.left = makeBalance(num, begin, midPoint-1)
-            root.right = makeBalance(num, midPoint+1, end)
-            return root
+        for num in nums:
+            T_easy = Tree(makeBalancedTree(num))
+            T_hard = Tree()
+            for i in num:
+                T_hard.insert(i)
 
-        T_easy = Tree(makeBalancedTree(num))
-        T_hard = Tree()
-        for i in num:
-            T_hard.insert(i)
+            def test_contains_easy():
+                T_easy.contains(num[-1])
 
-        def test_contains_easy():
-            T_easy.contains(num[-1])
+            def test_contains_hard():
+                T_hard.contains(num[-1])
 
-        def test_contains_hard():
-            T_hard.contains(num[-1])
+            best_case = '{:10.10f}s :Best Case,  Balanced,   Leaves {},  Depth {}'
+            worst_case = '{:10.10f}s :Worst Case, Unbalanced, Leaves {},  Depth {}'
+            time_easy = timeit.Timer(
+                "test_contains_easy()",
+                setup="from __main__ import test_contains_easy").timeit(
+                number=10000)
+            time_hard = timeit.Timer(
+                "test_contains_hard()",
+                setup="from __main__ import test_contains_hard").timeit(
+                number=10000)
 
-        best_case = '{:10.10f}s :Best Case,  Balanced,   Leaves {},  Depth {}'
-        worst_case = '{:10.10f}s :Worst Case, Unbalanced, Leaves {},  Depth {}'
-        time_easy = timeit.Timer(
-            "test_contains_easy()",
-            setup="from __main__ import test_contains_easy").timeit(
-            number=10000)
-        time_hard = timeit.Timer(
-            "test_contains_hard()",
-            setup="from __main__ import test_contains_hard").timeit(
-            number=10000)
-
-        print(best_case.format(time_easy, len(num), T_easy.depth()))
-        print(worst_case.format(time_hard, len(num), T_hard.depth()))
-        print('{} times slower'.format(float(time_hard)/float(time_easy)))
-        print('\n')
+            print(best_case.format(time_easy, len(num), T_easy.depth()))
+            print(worst_case.format(time_hard, len(num), T_hard.depth()))
+            print('{} times slower'.format(float(time_hard)/float(time_easy)))
+            print('\n')
+    else:
+        sample = range(0, 50)
+        T = Tree(makeBalancedTree(sample))
+        dot_graph = T.get_dot()
+        t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE)
+        t.communicate(dot_graph)
