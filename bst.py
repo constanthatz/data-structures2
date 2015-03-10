@@ -3,7 +3,6 @@ from Queue import Queue
 import timeit
 import subprocess
 import sys
-import os
 
 
 class Leaf(object):
