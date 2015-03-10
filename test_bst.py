@@ -55,7 +55,6 @@ def test_tree_unblanced():
     test_tree.insert(16)
     test_tree.insert(3)
     test_tree.insert(4)
-    test_tree.insert(0.5)
 
     return test_tree
 
@@ -236,6 +235,5 @@ def test_delete_not_present(test_tree):
 
 
 def test_nuclear_option(test_tree_unblanced):
-    test_tree_unblanced.graph()
-    test_tree_unblanced.nuclear_option
-
+    test_tree_unblanced.nuclear_option()
+    assert -1 <= test_tree_unblanced.balance() <= 1
