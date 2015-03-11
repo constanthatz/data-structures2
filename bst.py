@@ -235,20 +235,32 @@ class Tree(object):
             if parent == grand_parent.left:
                 if self._balance(grand_parent) == 1:
                     if self._balance(parent) == -1:
-                        rotate_left(parent)
-                    rotate_right(grand_parent)
+                        self._rotate_left(parent)
+                    self._rotate_right(grand_parent)
                     return
                 if self._balance(grand_parent) == -1:
                     return
             else:
                 if self._balance(grand_parent) == -1:
                     if self._balance(parent) == 1:
-                        rotate_right(parent)
-                    rotate_left(grand_parent)
+                        self._rotate_right(parent)
+                    self._rotate_left(grand_parent)
                     return
                 if self._balance(grand_parent) == 1:
                     return
             parent, grand_parent = grand_parent, parent.parent
+
+    def _rotate_left(self, leaf):
+        leaf.right.parent = leaf.parent
+        leaf.parent.left = leaf.right
+        leaf.right.left = leaf
+        leaf.parent = leaf.right
+
+    def _rotate_right(self, leaf):
+        leaf.left.parent = leaf.parent
+        leaf.parent.right = leaf.left
+        leaf.left.right = leaf
+        leaf.parent = leaf.left
 
 if __name__ == '__main__':
 
