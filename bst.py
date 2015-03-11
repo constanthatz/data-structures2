@@ -237,13 +237,21 @@ class Tree(object):
             leaf = self._insert(key, self.root)
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
-                self._avl_insert(leaf)
+                self._avl_insert(leaf.parent, bal)
 
-    def _avl_insert(self, leaf):
-        parent = leaf.parent.parent
-        current = leaf.parent
+    def _avl_insert(self, current, bal):
+        while bal != 1 or bal !=-1:
+            if bal > 1:
+                current = current.left
+                bal = self.balance(current)
+            else:
+                current = current.right
+                bal = self.balance(current)
+        
+        parent = current.parent
+
         while parent:
-            if current == parent.left:
+            if current is parent.left:
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
@@ -276,6 +284,9 @@ class Tree(object):
         except:
             self.root = leaf.left 
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
+        if leaf.left:
+            leaf.left.parent = leaf
+
 
 if __name__ == '__main__':
 

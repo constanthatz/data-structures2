@@ -247,36 +247,36 @@ def is_avl_balanced(tree):
     assert tree.root.right.key == 5
 
 
-def test_avl_left_left():
-    test_tree = Tree()
-    test_tree.avl_insert(5)
-    test_tree.avl_insert(4)
-    test_tree.avl_insert(3)
-    is_avl_balanced(test_tree)
+# def test_avl_left_left():
+#     test_tree = Tree()
+#     test_tree.avl_insert(5)
+#     test_tree.avl_insert(4)
+#     test_tree.avl_insert(3)
+#     is_avl_balanced(test_tree)
 
 
-def test_avl_left_right():
-    test_tree = Tree()
-    test_tree.avl_insert(5)
-    test_tree.avl_insert(3)
-    test_tree.avl_insert(4)
-    is_avl_balanced(test_tree)
+# def test_avl_left_right():
+#     test_tree = Tree()
+#     test_tree.avl_insert(5)
+#     test_tree.avl_insert(3)
+#     test_tree.avl_insert(4)
+#     is_avl_balanced(test_tree)
 
 
-def test_avl_right_right():
-    test_tree = Tree()
-    test_tree.avl_insert(3)
-    test_tree.avl_insert(4)
-    test_tree.avl_insert(5)
-    is_avl_balanced(test_tree)
+# def test_avl_right_right():
+#     test_tree = Tree()
+#     test_tree.avl_insert(3)
+#     test_tree.avl_insert(4)
+#     test_tree.avl_insert(5)
+#     is_avl_balanced(test_tree)
 
 
-def test_avl_right_left():
-    test_tree = Tree()
-    test_tree.avl_insert(3)
-    test_tree.avl_insert(5)
-    test_tree.avl_insert(4)
-    is_avl_balanced(test_tree)
+# def test_avl_right_left():
+#     test_tree = Tree()
+#     test_tree.avl_insert(3)
+#     test_tree.avl_insert(5)
+#     test_tree.avl_insert(4)
+#     is_avl_balanced(test_tree)
 
 
 def test_avl_large():
@@ -290,11 +290,12 @@ def test_avl_large():
     test_tree.insert(15)
     test_tree.insert(7)
     test_tree.insert(16)
-    test_tree.graph('pre_avl_check')
+    # test_tree.graph('pre_avl_check')
     test_tree.avl_insert(14)
+    # import pdb; pdb.set_trace()
     expected = [4, 2, 7, 1, 3, 6, 15, 5, 14, 16]
     actual = test_tree.breadth_first_traversal()
-    test_tree.graph('avl_check')
+    # test_tree.graph('avl_check')
 
     for val in expected:
         assert val == actual.next()
