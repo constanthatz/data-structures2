@@ -208,7 +208,6 @@ class Tree(object):
         with open('{}.png'.format(file_name), 'w') as png_file:
             png_file.write(png_data[0])
         os.system('open {}.png'.format(file_name))
-        os.system('rm {}.png'.format(file_name))
 
     def nuclear_option(self):
         generator = self.in_order()
