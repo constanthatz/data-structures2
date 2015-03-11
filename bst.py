@@ -260,13 +260,19 @@ class Tree(object):
 
     def _rotate_left(self, leaf):
         leaf.right.parent = leaf.parent
-        leaf.parent.left = leaf.right
+        try:
+            leaf.parent.left = leaf.right
+        except:
+            self.root = leaf.right
         leaf.right.left = leaf
         leaf.parent = leaf.right
 
     def _rotate_right(self, leaf):
         leaf.left.parent = leaf.parent
-        leaf.parent.right = leaf.left
+        try:
+            leaf.parent.right = leaf.left
+        except:
+            self.root = leaf.left
         leaf.left.right = leaf
         leaf.parent = leaf.left
 

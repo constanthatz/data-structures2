@@ -239,3 +239,13 @@ def test_nuclear_option(test_tree_unblanced):
     test_tree_unblanced.nuclear_option()
     # test_tree_unblanced.graph('balanced')
     assert -1 <= test_tree_unblanced.balance() <= 1
+
+
+def test_avl_simple_left_right():
+    test_tree = Tree()
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(4)
+    assert test_tree.root.key == 4
+    assert test_tree.root.left.key == 3
+    assert test_tree.root.right.key == 5
