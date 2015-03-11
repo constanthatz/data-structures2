@@ -225,6 +225,9 @@ class Tree(object):
         root.right = self._nuclear_option(num, midPoint+1, end, root)
         return root
 
+    def avl_fix(self):
+         pass
+
 if __name__ == '__main__':
 
     def makeBalancedTree(num):
