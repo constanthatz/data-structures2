@@ -210,16 +210,16 @@ class Tree(object):
             try:
                 num.append(generator.next())
             except StopIteration:
-                self.root = self._nuclear_option(num, 0, len(num)-1)
+                self.root = self._nuclear_option(num, 0, len(num)-1, None)
                 return
 
-    def _nuclear_option(self, num, begin, end):
+    def _nuclear_option(self, num, begin, end, parent):
         if begin > end:
             return None
         midPoint = (begin+end)//2
-        root = Leaf(num[midPoint])
-        root.left = self._nuclear_option(num, begin, midPoint-1)
-        root.right = self._nuclear_option(num, midPoint+1, end)
+        root = Leaf(num[midPoint], parent=parent)
+        root.left = self._nuclear_option(num, begin, midPoint-1, root)
+        root.right = self._nuclear_option(num, midPoint+1, end, root)
         return root
 
 if __name__ == '__main__':
