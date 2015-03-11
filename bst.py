@@ -229,8 +229,8 @@ class Tree(object):
         return root
 
     def avl_fix(self, leaf):
-        parent = leaf.parent
-        current = leaf
+        parent = leaf.parent.parent
+        current = leaf.parent
         while parent:
             if current == parent.left:
                 if self._balance(parent) == 2:
@@ -248,7 +248,7 @@ class Tree(object):
                     return
                 if self._balance(parent) == 1:
                     return
-            current, parent = parent, current.parent
+            current, parent = parent, parent.parent
 
     def _rotate_left(self, leaf):
         leaf.right.parent = leaf.parent
