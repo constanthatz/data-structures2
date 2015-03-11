@@ -274,12 +274,11 @@ def test_avl_right_right():
 def test_avl_right_left():
     test_tree = Tree()
     test_tree.avl_insert(3)
-    test_tree.graph('1')
+    # test_tree.graph('1')
     test_tree.avl_insert(5)
-    test_tree.graph('2')
+    # test_tree.graph('2')
     test_tree.avl_insert(4)
-    is_avl_balanced(test_tree)
-    test_tree.graph('3')
+    # test_tree.graph('3')
  
     is_avl_balanced(test_tree)
   
