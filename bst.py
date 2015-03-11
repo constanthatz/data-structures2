@@ -237,9 +237,10 @@ class Tree(object):
             leaf = self._insert(key, self.root)
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
-                self._avl_insert(leaf)
+                print(leaf.key)
+                self._avl_balance(leaf.parent)
 
-    def _avl_insert(self, leaf):
+    def _avl_balance(self, leaf):
         parent = leaf.parent.parent
         current = leaf.parent
         while parent:
@@ -247,7 +248,10 @@ class Tree(object):
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
+                        self.graph('left_rotate_left')
                     self._rotate_right(parent)
+                    self.graph('left_rotate_right')
+
                     return
                 if self._balance(parent) == -1:
                     return
@@ -255,7 +259,11 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
+                        self.graph('right_rotate_right')
+
                     self._rotate_left(parent)
+                    self.graph('right_rotate_left')
+
                     return
                 if self._balance(parent) == 1:
                     return
@@ -274,7 +282,7 @@ class Tree(object):
         try:
             leaf.parent.right = leaf.left
         except:
-            self.root = leaf.left 
+            self.root = leaf.left
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
 
 if __name__ == '__main__':
