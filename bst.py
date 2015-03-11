@@ -245,9 +245,7 @@ class Tree(object):
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
-                        self.graph('step')
                     self._rotate_right(parent)
-                    self.graph('step')
 
                     return
                 if self._balance(parent) == -1:
@@ -256,9 +254,7 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
-                        self.graph('step')
                     self._rotate_left(parent)
-                    self.graph('step')
                     return
                 if self._balance(parent) == 1:
                     return
