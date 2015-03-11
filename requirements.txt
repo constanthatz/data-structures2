@@ -1,0 +1,4 @@
+graphviz==0.4.3
+numpy==1.9.2
+py==1.4.26
+pytest==2.6.4
