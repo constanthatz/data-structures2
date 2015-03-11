@@ -126,17 +126,15 @@ class Tree(object):
         if not self.root:
             return 0
         else:
-            return max(self._depth(self.root))+1
+            return self._depth(self.root)[0]
 
     def _depth(self, leaf):
         if leaf is None:
-            return 0
+            return 0, 0, 0
         else:
-            depthL = self._depth(leaf.left)
-            depthR = self._depth(leaf.right)
-        if leaf == self.root:
-            return depthL, depthR
-        return max([depthL, depthR]) + 1
+            depthL = self._depth(leaf.left)[0]
+            depthR = self._depth(leaf.right)[0]
+        return max([depthL, depthR]) + 1, depthL, depthR
 
     def balance(self, start=None):
         if not start:
@@ -145,7 +143,7 @@ class Tree(object):
             return self._balance(start)
 
     def _balance(self, leaf):
-        depthL, depthR = self._depth(leaf)
+        depthL, depthR = self._depth(leaf)[1:3]
         return depthL - depthR
 
     def in_order(self):
@@ -244,7 +242,6 @@ class Tree(object):
         while parent:
             if current == parent.left:
                 if self._balance(parent) == 2:
-                    import pdb; pdb.set_trace()
                     if self._balance(current) == -1:
                         self._rotate_left(current)
                     self._rotate_right(parent)
