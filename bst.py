@@ -245,7 +245,6 @@ class Tree(object):
                     if self._balance(current) == -1:
                         self._rotate_left(current)
                     self._rotate_right(parent)
-
                     return
                 if self._balance(parent) == -1:
                     return
