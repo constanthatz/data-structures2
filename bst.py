@@ -64,14 +64,16 @@ class Tree(object):
             return leaf
         elif key < leaf.key:
             if leaf.left:
-                self._insert(key, leaf.left)
+                return self._insert(key, leaf.left)
             else:
                 leaf.left = Leaf(key, parent=leaf)
+                return leaf.left
         else:
             if leaf.right:
-                self._insert(key, leaf.right)
+                return self._insert(key, leaf.right)
             else:
                 leaf.right = Leaf(key, parent=leaf)
+                return leaf.right
 
     def _find_replacement(self, leaf):
         current = leaf
@@ -136,8 +138,11 @@ class Tree(object):
             return depthL, depthR
         return max([depthL, depthR]) + 1
 
-    def balance(self):
-        return self._balance(self.root)
+    def balance(self, start=None):
+        if not start:
+            return self._balance(self.root)
+        else:
+            return self._balance(start)
 
     def _balance(self, leaf):
         depthL, depthR = self._depth(leaf)
@@ -230,8 +235,8 @@ class Tree(object):
             self.root = Leaf(key)
         else:
             leaf = self._insert(key, self.root)
-        if not -1 >= self.balance(leaf.parent.parent) >= 1:
-            self._avl_insert(leaf)
+            if not -1 >= self.balance(leaf.parent.parent) >= 1:
+                self._avl_insert(leaf)
 
     def _avl_insert(self, leaf):
         parent = leaf.parent.parent
@@ -239,6 +244,7 @@ class Tree(object):
         while parent:
             if current == parent.left:
                 if self._balance(parent) == 2:
+                    import pdb; pdb.set_trace()
                     if self._balance(current) == -1:
                         self._rotate_left(current)
                     self._rotate_right(parent)
