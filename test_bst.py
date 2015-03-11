@@ -290,9 +290,12 @@ def test_avl_large():
     test_tree.insert(15)
     test_tree.insert(7)
     test_tree.insert(16)
+    test_tree.graph('pre_avl_check')
     test_tree.avl_insert(14)
     expected = [4, 2, 7, 1, 3, 6, 15, 5, 14, 16]
     actual = test_tree.breadth_first_traversal()
+    test_tree.graph('avl_check')
+
     for val in expected:
         assert val == actual.next()
     with pytest.raises(StopIteration):

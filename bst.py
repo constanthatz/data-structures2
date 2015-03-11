@@ -205,6 +205,8 @@ class Tree(object):
     def graph(self, file_name):
         t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         png_data = t.communicate(self.get_dot())
+        with open('{}.dot'.format(file_name), 'w') as png_file:
+            png_file.write(self.get_dot())
         with open('{}.png'.format(file_name), 'w') as png_file:
             png_file.write(png_data[0])
         os.system('open {}.png'.format(file_name))
@@ -233,7 +235,8 @@ class Tree(object):
             self.root = Leaf(key)
         else:
             leaf = self._insert(key, self.root)
-            if not -1 >= self.balance(leaf.parent.parent) >= 1:
+            bal = self.balance(self.root)
+            if bal > 1 or bal < -1:
                 self._avl_insert(leaf)
 
     def _avl_insert(self, leaf):
