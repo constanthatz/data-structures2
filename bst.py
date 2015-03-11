@@ -250,12 +250,16 @@ class Tree(object):
         
         parent = current.parent
 
+
         while parent:
             if current is parent.left:
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
+                        self.graph('left_rotate_left')
                     self._rotate_right(parent)
+                    self.graph('left_rotate_right')
+
                     return
                 if self._balance(parent) == -1:
                     return
@@ -263,7 +267,11 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
+                        self.graph('right_rotate_right')
+
                     self._rotate_left(parent)
+                    self.graph('right_rotate_left')
+
                     return
                 if self._balance(parent) == 1:
                     return
@@ -282,7 +290,7 @@ class Tree(object):
         try:
             leaf.parent.right = leaf.left
         except:
-            self.root = leaf.left 
+            self.root = leaf.left
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
         if leaf.left:
             leaf.left.parent = leaf
