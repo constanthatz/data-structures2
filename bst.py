@@ -266,6 +266,7 @@ class Tree(object):
             self.root = leaf.right
         leaf.right.left = leaf
         leaf.parent = leaf.right
+        leaf.right = leaf.parent.right
 
     def _rotate_right(self, leaf):
         leaf.left.parent = leaf.parent
@@ -275,6 +276,7 @@ class Tree(object):
             self.root = leaf.left
         leaf.left.right = leaf
         leaf.parent = leaf.left
+        leaf.left = leaf.parent.left
 
 if __name__ == '__main__':
 

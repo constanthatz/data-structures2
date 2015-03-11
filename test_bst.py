@@ -241,11 +241,39 @@ def test_nuclear_option(test_tree_unblanced):
     assert -1 <= test_tree_unblanced.balance() <= 1
 
 
-def test_avl_simple_left_right():
+def is_avl_balanced(tree):
+    assert tree.root.key == 4
+    assert tree.root.left.key == 3
+    assert tree.root.right.key == 5
+
+
+def test_avl_left_left():
+    test_tree = Tree()
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(4)
+    test_tree.avl_insert(3)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_left_right():
     test_tree = Tree()
     test_tree.avl_insert(5)
     test_tree.avl_insert(3)
     test_tree.avl_insert(4)
-    assert test_tree.root.key == 4
-    assert test_tree.root.left.key == 3
-    assert test_tree.root.right.key == 5
+    is_avl_balanced(test_tree)
+
+
+def test_avl_right_right():
+    test_tree = Tree()
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(4)
+    test_tree.avl_insert(5)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_right_left():
+    test_tree = Tree()
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(4)
+    is_avl_balanced(test_tree)
