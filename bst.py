@@ -57,11 +57,14 @@ class Tree(object):
         if not self.root:
             self.root = Leaf(key)
         else:
-            self._insert(key, self.root)
+            leaf = self._insert(key, self.root)
+
+        if not -1 >= self.balance(leaf.parent.parent) >= 1:
+            self.avl_fix(leaf)
 
     def _insert(self, key, leaf):
         if key == leaf.key:
-            return
+            return leaf
         elif key < leaf.key:
             if leaf.left:
                 self._insert(key, leaf.left)
@@ -225,7 +228,7 @@ class Tree(object):
         root.right = self._nuclear_option(num, midPoint+1, end, root)
         return root
 
-    def avl_fix(self):
+    def avl_fix(self, leaf):
          pass
 
 if __name__ == '__main__':
