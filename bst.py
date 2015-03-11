@@ -229,26 +229,26 @@ class Tree(object):
         return root
 
     def avl_fix(self, leaf):
-        grand_parent = leaf.parent.parent
         parent = leaf.parent
-        while grand_parent:
-            if parent == grand_parent.left:
-                if self._balance(grand_parent) == 1:
-                    if self._balance(parent) == -1:
-                        self._rotate_left(parent)
-                    self._rotate_right(grand_parent)
+        current = leaf
+        while parent:
+            if current == parent.left:
+                if self._balance(parent) == 2:
+                    if self._balance(current) == -1:
+                        self._rotate_left(current)
+                    self._rotate_right(parent)
                     return
-                if self._balance(grand_parent) == -1:
+                if self._balance(parent) == -1:
                     return
             else:
-                if self._balance(grand_parent) == -1:
-                    if self._balance(parent) == 1:
-                        self._rotate_right(parent)
-                    self._rotate_left(grand_parent)
+                if self._balance(parent) == -2:
+                    if self._balance(current) == 1:
+                        self._rotate_right(current)
+                    self._rotate_left(parent)
                     return
-                if self._balance(grand_parent) == 1:
+                if self._balance(parent) == 1:
                     return
-            parent, grand_parent = grand_parent, parent.parent
+            current, parent = parent, current.parent
 
     def _rotate_left(self, leaf):
         leaf.right.parent = leaf.parent
