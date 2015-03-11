@@ -277,3 +277,24 @@ def test_avl_right_left():
     test_tree.avl_insert(5)
     test_tree.avl_insert(4)
     is_avl_balanced(test_tree)
+
+
+def test_avl_large():
+    test_tree = Tree()
+    test_tree.insert(4)
+    test_tree.insert(2)
+    test_tree.insert(6)
+    test_tree.insert(1)
+    test_tree.insert(3)
+    test_tree.insert(5)
+    test_tree.insert(15)
+    test_tree.insert(7)
+    test_tree.insert(16)
+    test_tree.avl_insert(14)
+    expected = [4, 2, 7, 1, 3, 6, 15, 5, 14, 16]
+    actual = test_tree.breadth_first_traversal()
+    for val in expected:
+        assert val == actual.next()
+    with pytest.raises(StopIteration):
+        actual.next()
+
