@@ -16,6 +16,8 @@ class Leaf(object):
 
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
+        if self.parent is not None:
+            yield "\t%s -> %s;" % (self.key, self.parent.key)
         if self.left is not None:
             yield "\t%s -> %s;" % (self.key, self.left.key)
             for i in self.left._get_dot():
