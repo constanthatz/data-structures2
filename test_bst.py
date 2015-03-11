@@ -239,3 +239,10 @@ def test_nuclear_option(test_tree_unblanced):
     test_tree_unblanced.nuclear_option()
     # test_tree_unblanced.graph('balanced')
     assert -1 <= test_tree_unblanced.balance() <= 1
+
+
+def test_avl_insert():
+    T = Tree()
+    T.avl_insert(5)
+    T.avl_insert(3)
+    T.avl_insert(4)

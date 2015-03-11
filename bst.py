@@ -208,6 +208,7 @@ class Tree(object):
         with open('{}.png'.format(file_name), 'w') as png_file:
             png_file.write(png_data[0])
         os.system('open {}.png'.format(file_name))
+        os.system('rm {}.png'.format(file_name))
 
     def nuclear_option(self):
         generator = self.in_order()
@@ -244,7 +245,10 @@ class Tree(object):
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
+                        self.graph('step')
                     self._rotate_right(parent)
+                    self.graph('step')
+
                     return
                 if self._balance(parent) == -1:
                     return
@@ -252,7 +256,9 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
+                        self.graph('step')
                     self._rotate_left(parent)
+                    self.graph('step')
                     return
                 if self._balance(parent) == 1:
                     return
