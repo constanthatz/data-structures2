@@ -235,7 +235,7 @@ def test_delete_not_present(test_tree):
 
 
 def test_nuclear_option(test_tree_unblanced):
-    test_tree_unblanced.graph('unbalanced')
+    # test_tree_unblanced.graph('unbalanced')
     test_tree_unblanced.nuclear_option()
-    test_tree_unblanced.graph('balanced')
+    # test_tree_unblanced.graph('balanced')
     assert -1 <= test_tree_unblanced.balance() <= 1

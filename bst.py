@@ -137,7 +137,10 @@ class Tree(object):
         return max([depthL, depthR]) + 1
 
     def balance(self):
-        depthL, depthR = self._depth(self.root)
+        return self._balance(self.root)
+
+    def _balance(self, leaf):
+        depthL, depthR = self._depth(leaf)
         return depthL - depthR
 
     def in_order(self):
