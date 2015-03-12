@@ -2,7 +2,7 @@ class HashTable(object):
 
     def __init__(self, size):
         self.size = size
-        self.table = [[]] * self.size
+        self.table = [[] for i in xrange(size)]
 
     def get(self, key):
         index = self.hash(key)
@@ -26,3 +26,6 @@ class HashTable(object):
 
         index = hash % self.size
         return index
+
+    def bin_size(self):
+        print [len(bin_list) for bin_list in self.table]

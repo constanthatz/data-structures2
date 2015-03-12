@@ -1,6 +1,6 @@
 import pytest
 from hash_table import HashTable
-
+import random
 
 @pytest.fixture(scope="function")
 def test_table():
@@ -11,7 +11,7 @@ def test_table():
 @pytest.fixture(scope="function")
 def big_list():
     with open('/usr/share/dict/words', 'r') as words:
-        big_list = words.readlines(10000*50)
+        big_list = words.readlines()
     return big_list
 
 
@@ -49,4 +49,5 @@ def test_big_list(big_list):
     table = HashTable(1024)
     for item in big_list:
         table.set(item, item)
+    for item in random.sample(big_list, 1000):
         assert table.get(item) == item
