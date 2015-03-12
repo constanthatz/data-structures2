@@ -250,7 +250,7 @@ class Tree(object):
             self.root = Leaf(key)
         else:
             self._insert(key, self.root)
-            # self.graph('1 Pre AVL Balance')
+            # self.graph('1_Pre_AVL_Balance')
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
                 self._avl_insert(self.root, bal)
@@ -270,9 +270,9 @@ class Tree(object):
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
-                        # self.graph('2 Left Left')
+                        # self.graph('2_Left_Left')
                     self._rotate_right(parent)
-                    # self.graph('3 Left Right')
+                    # self.graph('3_Left_Right')
 
                     return
                 if self._balance(parent) == -1:
@@ -281,10 +281,10 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
-                        # self.graph('4 Right Right')
+                        # self.graph('4_Right_Right')
 
                     self._rotate_left(parent)
-                    # self.graph('5 Right Left')
+                    # self.graph('5_Right_Left')
 
                     return
                 if self._balance(parent) == 1:
