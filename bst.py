@@ -14,6 +14,21 @@ class Leaf(object):
         self.right = right
         self.parent = parent
 
+    def __repr__(self):
+        if self.parent:
+            parent = self.parent.key
+        else:
+            parent = None
+        if self.left:
+            left = self.left.key
+        else:
+            left = None
+        if self.right:
+            right = self.right.key
+        else:
+            right = None
+        return "parent = {}, left = {} , right = {}".format(parent, left, right)
+
     def _get_dot(self):
         """recursively prepare a dot graph entry for this node."""
         if self.parent is not None:
@@ -203,10 +218,10 @@ class Tree(object):
         ))
 
     def graph(self, file_name):
-        t = subprocess.Popen(["dot", "-Tpng"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        t = subprocess.Popen(["dot", "-Tpng"],
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE)
         png_data = t.communicate(self.get_dot())
-        with open('{}.dot'.format(file_name), 'w') as png_file:
-            png_file.write(self.get_dot())
         with open('{}.png'.format(file_name), 'w') as png_file:
             png_file.write(png_data[0])
         os.system('open {}.png'.format(file_name))
@@ -234,31 +249,30 @@ class Tree(object):
         if not self.root:
             self.root = Leaf(key)
         else:
-            leaf = self._insert(key, self.root)
+            self._insert(key, self.root)
+            # self.graph('1 Pre AVL Balance')
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
-                self._avl_insert(leaf.parent, bal)
+                self._avl_insert(self.root, bal)
 
     def _avl_insert(self, current, bal):
-        while bal != 1 or bal !=-1:
+        while not (bal == 1 or bal == -1):
             if bal > 1:
                 current = current.left
                 bal = self.balance(current)
             else:
                 current = current.right
                 bal = self.balance(current)
-        
         parent = current.parent
-
 
         while parent:
             if current is parent.left:
                 if self._balance(parent) == 2:
                     if self._balance(current) == -1:
                         self._rotate_left(current)
-                        self.graph('left_rotate_left')
+                        # self.graph('2 Left Left')
                     self._rotate_right(parent)
-                    self.graph('left_rotate_right')
+                    # self.graph('3 Left Right')
 
                     return
                 if self._balance(parent) == -1:
@@ -267,10 +281,10 @@ class Tree(object):
                 if self._balance(parent) == -2:
                     if self._balance(current) == 1:
                         self._rotate_right(current)
-                        self.graph('right_rotate_right')
+                        # self.graph('4 Right Right')
 
                     self._rotate_left(parent)
-                    self.graph('right_rotate_left')
+                    # self.graph('5 Right Left')
 
                     return
                 if self._balance(parent) == 1:
@@ -280,15 +294,23 @@ class Tree(object):
     def _rotate_left(self, leaf):
         leaf.right.parent = leaf.parent
         try:
-            leaf.parent.left = leaf.right
+            if leaf is leaf.parent.left:
+                leaf.parent.left = leaf.right
+            else:
+                leaf.parent.right = leaf.right
         except:
             self.root = leaf.right
         leaf.right.left, leaf.right, leaf.parent = leaf, leaf.right.left, leaf.right
+        if leaf.right:
+            leaf.right.parent = leaf
 
     def _rotate_right(self, leaf):
         leaf.left.parent = leaf.parent
         try:
-            leaf.parent.right = leaf.left
+            if leaf is leaf.parent.right:
+                leaf.parent.right = leaf.left
+            else:
+                leaf.parent.left = leaf.left
         except:
             self.root = leaf.left
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
