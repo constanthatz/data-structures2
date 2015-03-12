@@ -301,8 +301,10 @@ class Tree(object):
         except:
             self.root = leaf.right
         leaf.right.left, leaf.right, leaf.parent = leaf, leaf.right.left, leaf.right
-        if leaf.right:
+        try:
             leaf.right.parent = leaf
+        except:
+            pass
 
     def _rotate_right(self, leaf):
         leaf.left.parent = leaf.parent
@@ -314,8 +316,10 @@ class Tree(object):
         except:
             self.root = leaf.left
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
-        if leaf.left:
+        try:
             leaf.left.parent = leaf
+        except:
+            pass
 
 
 if __name__ == '__main__':

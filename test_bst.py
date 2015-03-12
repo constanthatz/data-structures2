@@ -300,6 +300,7 @@ def test_avl_large_right():
     with pytest.raises(StopIteration):
         actual.next()
 
+
 def test_avl_large_left():
     test_tree = Tree()
     test_tree.insert(4)
@@ -312,7 +313,7 @@ def test_avl_large_left():
     test_tree.insert(1.5)
     test_tree.insert(0.5)
     test_tree.avl_insert(1.25)
-    test_tree.graph('6_Post_AVL_Balance')
+    # test_tree.graph('6_Post_AVL_Balance')
     expected = [4, 1.5, 6, 1, 2, 5, 15, 0.5, 1.25, 3]
     actual = test_tree.breadth_first_traversal()
 
