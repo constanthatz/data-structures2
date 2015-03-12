@@ -4,16 +4,26 @@ class HashTable(object):
         self.size = size
         self.table = [[]] * self.size
 
+    def get(self, key):
+        index = self.hash(key)
+        for item in self.table[index]:
+            if key == item[0]:
+                return item[1]
+        raise ValueError("Key not in table")
 
-    def get(key):
-        pass
+    def set(self, key, val):
+        try:
+            index = self.hash(key)
+        except TypeError:
+            raise
 
-    def set(key, val):
-        pass
+        self.table[index].append((key, val))
 
-    def hash(key):
+    def hash(self, key):
         hash = 0
         for char in key:
             hash += ord(char)
 
-        return hash
+        index = hash % self.size
+        print hash
+        return index
