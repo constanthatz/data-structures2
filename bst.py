@@ -253,9 +253,9 @@ class Tree(object):
             # self.graph('1_Pre_AVL_Balance')
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
-                self._avl_insert(self.root, bal)
+                self._avl_balance(self.root, bal)
 
-    def _avl_insert(self, current, bal):
+    def _avl_balance(self, current, bal):
         while not (bal == 1 or bal == -1):
             if bal > 1:
                 current = current.left
