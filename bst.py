@@ -253,9 +253,9 @@ class Tree(object):
             # self.graph('1_Pre_AVL_Balance')
             bal = self.balance(self.root)
             if bal > 1 or bal < -1:
-                self._avl_insert(self.root, bal)
+                self._avl_balance(self.root, bal)
 
-    def _avl_insert(self, current, bal):
+    def _avl_balance(self, current, bal):
         while not (bal == 1 or bal == -1):
             if bal > 1:
                 current = current.left
@@ -301,8 +301,10 @@ class Tree(object):
         except:
             self.root = leaf.right
         leaf.right.left, leaf.right, leaf.parent = leaf, leaf.right.left, leaf.right
-        if leaf.right:
+        try:
             leaf.right.parent = leaf
+        except:
+            pass
 
     def _rotate_right(self, leaf):
         leaf.left.parent = leaf.parent
@@ -314,8 +316,10 @@ class Tree(object):
         except:
             self.root = leaf.left
         leaf.left.right, leaf.left, leaf.parent = leaf, leaf.left.right, leaf.left
-        if leaf.left:
+        try:
             leaf.left.parent = leaf
+        except:
+            pass
 
 
 if __name__ == '__main__':
@@ -333,7 +337,7 @@ if __name__ == '__main__':
         return root
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == 't':
+        if sys.argv[1] == 'con':
             nums = []
             nums.append(range(0, 5))
             nums.append(range(0, 50))
@@ -366,7 +370,24 @@ if __name__ == '__main__':
                 print(worst_case.format(time_hard, len(num), T_hard.depth()))
                 print('{} times slower'.format(float(time_hard)/float(time_easy)))
                 print('\n')
-        elif sys.argv[1] == 'g':
-            sample = range(0, 37)
-            T = Tree(makeBalancedTree(sample))
-            T.graph('bst')
+        elif sys.argv[1] == 'avl':
+            nums = []
+            nums.append(range(0, 5))
+            nums.append(range(0, 50))
+            nums.append(range(0, 500))
+
+            for num in nums:
+                T = Tree()
+
+                def test_avl_insert():
+                    for i in num:
+                        T.avl_insert(i)
+
+                case = '{:10.10f}s : Leaves {}'
+                time = timeit.Timer(
+                    "test_avl_insert()",
+                    setup="from __main__ import test_avl_insert").timeit(
+                    number=100)
+
+                print(case.format(time, len(num)))
+                print('\n')
