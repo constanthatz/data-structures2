@@ -337,7 +337,7 @@ if __name__ == '__main__':
         return root
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == 't':
+        if sys.argv[1] == 'con':
             nums = []
             nums.append(range(0, 5))
             nums.append(range(0, 50))
@@ -370,7 +370,24 @@ if __name__ == '__main__':
                 print(worst_case.format(time_hard, len(num), T_hard.depth()))
                 print('{} times slower'.format(float(time_hard)/float(time_easy)))
                 print('\n')
-        elif sys.argv[1] == 'g':
-            sample = range(0, 37)
-            T = Tree(makeBalancedTree(sample))
-            T.graph('bst')
+        elif sys.argv[1] == 'avl':
+            nums = []
+            nums.append(range(0, 5))
+            nums.append(range(0, 50))
+            nums.append(range(0, 500))
+
+            for num in nums:
+                T = Tree()
+
+                def test_avl_insert():
+                    for i in num:
+                        T.avl_insert(i)
+
+                case = '{:10.10f}s : Leaves {}'
+                time = timeit.Timer(
+                    "test_avl_insert()",
+                    setup="from __main__ import test_avl_insert").timeit(
+                    number=100)
+
+                print(case.format(time, len(num)))
+                print('\n')
