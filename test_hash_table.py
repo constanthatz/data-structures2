@@ -8,6 +8,13 @@ def test_table():
     return test_table
 
 
+@pytest.fixture(scope="function")
+def big_list():
+    with open('/usr/share/dict/words', 'r') as words:
+        big_list = words.readlines(10000*50)
+    return big_list
+
+
 def test_init(test_table):
     assert test_table.size == 10
     assert test_table.table
@@ -36,3 +43,10 @@ def test_get(test_table):
 def test_get_not_found(test_table):
     with pytest.raises(ValueError):
         test_table.get("test")
+
+
+def test_big_list(big_list):
+    table = HashTable(1024)
+    for item in big_list:
+        table.set(item, item)
+        assert table.get(item) == item

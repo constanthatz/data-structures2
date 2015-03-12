@@ -25,5 +25,4 @@ class HashTable(object):
             hash += ord(char)
 
         index = hash % self.size
-        print hash
         return index
