@@ -42,6 +42,23 @@ def test_tree_delete():
     return test_tree
 
 
+@pytest.fixture(scope="function")
+def test_tree_unblanced():
+    test_tree = Tree()
+    test_tree.insert(1)
+    test_tree.insert(2)
+    test_tree.insert(10)
+    test_tree.insert(12)
+    test_tree.insert(13)
+    test_tree.insert(14)
+    test_tree.insert(15)
+    test_tree.insert(16)
+    test_tree.insert(3)
+    test_tree.insert(4)
+
+    return test_tree
+
+
 def test_insert_as_root():
     test_tree = Tree()
     test_tree.insert(5)
@@ -211,6 +228,95 @@ def test_delete_not_present(test_tree):
     test_tree.delete(99)
     expected = [4, 5, 8]
     actual = test_tree.in_order()
+    for val in expected:
+        assert val == actual.next()
+    with pytest.raises(StopIteration):
+        actual.next()
+
+
+def test_nuclear_option(test_tree_unblanced):
+    # test_tree_unblanced.graph('unbalanced')
+    test_tree_unblanced.nuclear_option()
+    # test_tree_unblanced.graph('balanced')
+    assert -1 <= test_tree_unblanced.balance() <= 1
+
+
+def is_avl_balanced(tree):
+    assert tree.root.key == 4
+    assert tree.root.left.key == 3
+    assert tree.root.right.key == 5
+
+
+def test_avl_left_left():
+    test_tree = Tree()
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(4)
+    test_tree.avl_insert(3)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_left_right():
+    test_tree = Tree()
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(4)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_right_right():
+    test_tree = Tree()
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(4)
+    test_tree.avl_insert(5)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_right_left():
+    test_tree = Tree()
+    test_tree.avl_insert(3)
+    test_tree.avl_insert(5)
+    test_tree.avl_insert(4)
+    is_avl_balanced(test_tree)
+
+
+def test_avl_large_right():
+    test_tree = Tree()
+    test_tree.insert(4)
+    test_tree.insert(2)
+    test_tree.insert(6)
+    test_tree.insert(1)
+    test_tree.insert(3)
+    test_tree.insert(5)
+    test_tree.insert(15)
+    test_tree.insert(7)
+    test_tree.insert(16)
+    test_tree.avl_insert(14)
+    # test_tree.graph('6 Post AVL Balance')
+    expected = [4, 2, 7, 1, 3, 6, 15, 5, 14, 16]
+    actual = test_tree.breadth_first_traversal()
+
+    for val in expected:
+        assert val == actual.next()
+    with pytest.raises(StopIteration):
+        actual.next()
+
+
+def test_avl_large_left():
+    test_tree = Tree()
+    test_tree.insert(4)
+    test_tree.insert(2)
+    test_tree.insert(6)
+    test_tree.insert(1)
+    test_tree.insert(3)
+    test_tree.insert(5)
+    test_tree.insert(15)
+    test_tree.insert(1.5)
+    test_tree.insert(0.5)
+    test_tree.avl_insert(1.25)
+    # test_tree.graph('6_Post_AVL_Balance')
+    expected = [4, 1.5, 6, 1, 2, 5, 15, 0.5, 1.25, 3]
+    actual = test_tree.breadth_first_traversal()
+
     for val in expected:
         assert val == actual.next()
     with pytest.raises(StopIteration):
