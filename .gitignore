@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Sublime
+data-structures2.sublime-project
+data-structures2.sublime-workspace
