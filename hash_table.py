@@ -24,8 +24,7 @@ class HashTable(object):
         for char in key:
             hash += ord(char)
 
-        index = hash % self.size
-        return index
+        return hash % self.size
 
     def bin_size(self):
         print [len(bin_list) for bin_list in self.table]
