@@ -12,11 +12,11 @@ class HashTable(object):
         raise ValueError("Key not in table")
 
     def set(self, key, val):
-        try:
-            index = self.hash(key)
-        except TypeError:
-            raise
-
+        index = self.hash(key)
+        for item_num, item in enumerate(self.table[index]):
+            if key == item[0]:
+                self.table[index][item_num] = (key, val)
+                return
         self.table[index].append((key, val))
 
     def hash(self, key):

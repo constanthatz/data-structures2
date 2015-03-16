@@ -35,6 +35,12 @@ def test_set_bad_value(test_table):
         test_table.set(2, 10)
 
 
+def test_set_key_exists(test_table):
+    test_table.set("test", 10)
+    test_table.set("test", 9)
+    assert test_table.table[8] == [("test", 9)]
+
+
 def test_get(test_table):
     test_table.set("test", 10)
     assert test_table.get("test") == 10
