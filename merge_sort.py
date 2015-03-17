@@ -3,27 +3,35 @@ import timeit
 
 def merge_sort(the_list):
     lists = [the_list]
-    while len(lists[0]) > 1:
+    print('split')
+    while len(lists[-1]) > 1:
         lists = split(lists)
+    print('\nmerge')
     while len(lists) > 1:
-        lists = sort(lists)
+        lists = mergeAll(lists)
+    return lists
 
 
 def split(lists):
     new_list = []
     for item in lists:
         new_list.append(item[:len(item)/2])
-        new_list.append(a_list[len(item)/2:])
+        new_list.append(item[len(item)/2:])
+    print(new_list)
     return new_list
 
 
-def sort(lists):
+def mergeAll(lists):
     new_list = []
-    for i in xrange(len(lists)-1):
-        merge(lists[i], lists[i+1])
+    for i in xrange(0, len(lists)-1, 2):
+        new_list.append(mergeTwo(lists[i], lists[i+1]))
+    if len(lists) % 2:
+        new_list.append(lists[-1])
+    print(new_list)
+    return new_list
 
 
-def merge(list1, list2):
+def mergeTwo(list1, list2):
     new_list = []
     while list1:
         try:
@@ -60,6 +68,15 @@ if __name__ == '__main__':
         # print(time_best)
         # print(time_worst)
 
-        list1 = [3, 7]
-        list2 = [1, 13]
-        print(merge(list1, list2))
+        # list1 = [3, 7]
+        # list2 = [1, 13]
+        # print(merge(list1, list2))
+
+        # lists = [[1], [], [12], [3], [5]]
+        # while len(lists) > 1:
+        #     lists = mergeAll(lists)
+        # print(lists)
+
+        lists = [5, 17, 4, 3, -1, 6, 37]
+        print(lists)
+        print(merge_sort(lists))
