@@ -63,10 +63,6 @@ def sort(lists):
     for i in xrange(0, len(the_list), 2):
         if the_list[i] < len(the_list):
             if the_list[i+1] > the_list[i]:
-<<<<<<< HEAD
-                the_list[i], the_list[i+1] = the_list[i+1], the_list[i]
-    for 
-=======
                 the_list[i], the_list[i+1] = the_list[i+1], the_list[i] 
             else:
                 pass
@@ -93,4 +89,4 @@ if __name__ == '__main__':
 
         print(time_best)
         print(time_worst)
->>>>>>> ca6dbf22fdf7b59db57bbaa418640e9840b2f33f
+
