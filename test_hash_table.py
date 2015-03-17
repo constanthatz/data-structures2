@@ -57,3 +57,18 @@ def test_big_list(big_list):
         table.set(item, item)
     for item in random.sample(big_list, 1000):
         assert table.get(item) == item
+
+
+def test_insert_same_key_size_check(test_table):
+    test_table.set("test", 10)
+    test_table.set("test", 15)
+    total_keys = 0
+    for item in test_table.table:
+        total_keys += len(item)
+    assert total_keys == 1
+
+
+def test_insert_same_key_get_check(test_table):
+    test_table.set("test", 10)
+    test_table.set("test", 15)
+    assert test_table.get("test") == 15
