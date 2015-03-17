@@ -19,23 +19,22 @@ def split(lists):
 
 def sort(lists):
     new_list = []
-    while i < len(lists)-2:
-        new_sublist = []
-        while lists[i]:
-            
-            for j in range(len(lists[i])):
-                for k in range(len(lists[i+1])):
-                    if lists[i][j] < lists[i][k]:
-                        new_sublist.append(lists[i][j])
+    for i in xrange(len(lists)-1):
+        merge(lists[i], lists[i+1])
 
 
-                 new_sublist.append(lists[i][j], lists[i+1][j])
+def merge(list1, list2):
+    new_list = []
+    while list1:
+        try:
+            if list1[0] < list2[0]:
+                new_list.append(list1.pop(0))
+            else:
+                new_list.append(list2.pop(0))
+        except IndexError:
+            new_list.append(list1.pop(0))
+    new_list.append(list2[:])
 
-
-
-
-
-                new_sublistappend
 
 
 
