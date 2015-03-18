@@ -21,17 +21,24 @@ def mergeAll(lists):
     return new_list
 
 
-def mergeTwo(list1, list2):
+def mergeTwo(left, right):
     new_list = []
-    while list1:
-        try:
-            if list1[0] < list2[0]:
-                new_list.append(list1.pop(0))
-            else:
-                new_list.append(list2.pop(0))
-        except IndexError:
-            new_list.append(list1.pop(0))
-    new_list.extend(list2)
+    left_idx, right_idx = 0, 0
+    while left_idx < len(left) and right_idx < len(right):
+        if left[left_idx] < right[right_idx]:
+            new_list.append(left[left_idx])
+            left_idx += 1
+        else:
+            new_list.append(right[right_idx])
+            right_idx += 1
+
+    while left_idx < len(left):
+        new_list.append(left[left_idx])
+        left_idx += 1
+
+    while right_idx < len(right):
+        new_list.append(right[right_idx])
+        right_idx += 1
 
     return new_list
 
@@ -57,16 +64,3 @@ if __name__ == '__main__':
 
         print(time_best)
         print(time_worst)
-
-        # list1 = [3, 7]
-        # list2 = [1, 13]
-        # print(merge(list1, list2))
-
-        # lists = [[1], [], [12], [3], [5]]
-        # while len(lists) > 1:
-        #     lists = mergeAll(lists)
-        # print(lists)
-
-        # lists = [5, 17, 4, 3, -1, 6, 37]
-        # print(lists)
-        # print(merge_sort(lists))
