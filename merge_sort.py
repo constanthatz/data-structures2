@@ -2,10 +2,13 @@ import timeit
 
 
 def merge_sort(the_list):
-    lists = split(the_list)
-    while len(lists) > 1:
-        lists = mergeAll(lists)
-    return lists[0]
+    if the_list:
+        lists = split(the_list)
+        while len(lists) > 1:
+            lists = mergeAll(lists)
+        return lists[0]
+    else:
+        return the_list
 
 
 def split(lists):
