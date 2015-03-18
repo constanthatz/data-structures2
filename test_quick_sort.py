@@ -38,8 +38,7 @@ def test_even_best_list(even_best_list):
 
 
 def test_even_worst_list(even_worst_list):
-    import pdb; pdb.set_trace()
-    assert quicksort(even_worst_list) == even_worst_list[::-1]
+    assert quicksort(even_worst_list) == [-3, -2, -1, 0, 1, 2, 3, 4]
 
 
 def test_odd_best_list(odd_best_list):
@@ -47,7 +46,7 @@ def test_odd_best_list(odd_best_list):
 
 
 def test_odd_worst_list(odd_worst_list):
-    assert quicksort(odd_worst_list) == odd_worst_list[::-1]
+    assert quicksort(odd_worst_list) == [-2, -1, 0, 1, 2, 3, 4]
 
 
 def test_random_list(random_list):

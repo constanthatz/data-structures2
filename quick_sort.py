@@ -13,6 +13,7 @@ def _quicksort(A, lo, hi):
         _quicksort(A, p + 1, hi)
     return A
 
+
 def partition(A, lo, hi):
     pivotIndex = select_pivot(A, lo, hi)
     pivotValue = A[pivotIndex]
@@ -20,6 +21,7 @@ def partition(A, lo, hi):
     A[pivotIndex], A[hi] = A[hi], A[pivotIndex]
     storeIndex = lo
     for i in xrange(lo, hi):
+        # import pdb; pdb.set_trace()
         if A[i] < pivotValue:
             A[storeIndex], A[i] = A[i], A[storeIndex]
             storeIndex += 1
@@ -28,12 +30,13 @@ def partition(A, lo, hi):
 
 
 def select_pivot(a_list, lo, hi):
+    # import pdb; pdb.set_trace()
     if a_list[lo] <= a_list[(hi - lo)/2] <= a_list[hi] or a_list[hi] <= a_list[(hi - lo)/2] <= a_list[lo]:
-        return a_list[(hi - lo)/2]
+        return (hi - lo)/2
     elif a_list[(hi - lo)/2] <= a_list[lo] <= a_list[hi] or a_list[hi] <= a_list[lo] <= a_list[(hi - lo)/2]:
-        return a_list[lo]
+        return lo
     else:
-        return a_list[hi]
+        return hi
 
 if __name__ == '__main__':
     nums_best = [range(0, 10**i) for i in xrange(4)]
