@@ -7,7 +7,7 @@ def quicksort(A, lo, hi):
 
 
 def partition(A, lo, hi):
-    pivotIndex = choose_pivot(A, lo, hi)
+    pivotIndex = select_pivot(A, lo, hi)
     pivotValue = A[pivotIndex]
 
     A[pivotIndex], A[hi] = A[hi], A[pivotIndex]
