@@ -60,27 +60,27 @@ def test_random_list(random_list):
     assert merge_sort(random_list) == the_list
 
 
-# def test_recursive_empty(empty_list):
-#     assert rec_merge_sort(empty_list) == []
+def test_recursive_empty(empty_list):
+    assert rec_merge_sort(empty_list) == []
 
 
-# def test_recursive_even_best_list(even_best_list):
-#     assert rec_merge_sort(even_best_list) == even_best_list
+def test_recursive_even_best_list(even_best_list):
+    assert rec_merge_sort(even_best_list) == even_best_list
 
 
-# def test_recursive_even_worst_list(even_worst_list):
-#     assert rec_merge_sort(even_worst_list) == even_worst_list[::-1]
+def test_recursive_even_worst_list(even_worst_list):
+    assert rec_merge_sort(even_worst_list) == even_worst_list[::-1]
 
 
-# def test_recursive_odd_best_list(odd_best_list):
-#     assert rec_merge_sort(odd_best_list) == odd_best_list
+def test_recursive_odd_best_list(odd_best_list):
+    assert rec_merge_sort(odd_best_list) == odd_best_list
 
 
-# def test_recursive_odd_worst_list(odd_worst_list):
-#     assert rec_merge_sort(odd_worst_list) == odd_worst_list[::-1]
+def test_recursive_odd_worst_list(odd_worst_list):
+    assert rec_merge_sort(odd_worst_list) == odd_worst_list[::-1]
 
 
-# def test_recursive_random_list(random_list):
-#     the_list = [-3, -2, -1, 0, 1, 2, 3, 4]
-#     assert rec_merge_sort(random_list) == the_list
+def test_recursive_random_list(random_list):
+    the_list = [-3, -2, -1, 0, 1, 2, 3, 4]
+    assert rec_merge_sort(random_list) == the_list
 
