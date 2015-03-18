@@ -2,12 +2,16 @@ import random
 import timeit
 
 
-def quicksort(A, lo, hi):
+def quicksort(a_list):
+    return _quicksort(a_list, 0, (len(a_list)-1))
+
+
+def _quicksort(A, lo, hi):
     if lo < hi:
         p = partition(A, lo, hi)
-        quicksort(A, lo, p - 1)
-        quicksort(A, p + 1, hi)
-
+        _quicksort(A, lo, p - 1)
+        _quicksort(A, p + 1, hi)
+    return A
 
 def partition(A, lo, hi):
     pivotIndex = select_pivot(A, lo, hi)
@@ -40,7 +44,7 @@ if __name__ == '__main__':
 
     for i in xrange(len(nums_best)):
         def test(nums, lo, hi):
-            quicksort(nums, lo, hi)
+            quicksort(nums)
 
         setup = "from __main__ import test\nnums = {}"
 
