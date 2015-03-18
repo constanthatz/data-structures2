@@ -1,4 +1,5 @@
 import random
+import timeit
 
 
 def quicksort(A, lo, hi):
@@ -31,7 +32,24 @@ def select_pivot(a_list, lo, hi):
         return a_list[hi]
 
 if __name__ == '__main__':
-    a_list = random.sample(range(10), 10)
-    print(a_list)
-    quicksort(a_list, 0, len(a_list)-1)
-    print(a_list)
+    nums_best = [range(0, 10**i) for i in xrange(4)]
+    nums_worst = [item[::-1] for item in nums_best]
+
+    time_best = []
+    time_worst = []
+
+    for i in xrange(len(nums_best)):
+        def test(nums, lo, hi):
+            quicksort(nums, lo, hi)
+
+        setup = "from __main__ import test\nnums = {}"
+
+        time_best.append(timeit.Timer(
+            "test(nums, 0, len(nums)-1)",
+            setup=setup.format(nums_best[i])).timeit(number=10000))
+        time_worst.append(timeit.Timer(
+            "test(nums, 0, len(nums)-1)",
+            setup=setup.format(nums_worst[i])).timeit(number=10000))
+
+    print(time_best)
+    print(time_worst)
