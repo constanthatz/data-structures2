@@ -1,4 +1,6 @@
-from queue import Queue
+from Queue import Queue
+import random
+import timeit
 
 
 def radix_sort(a_list):
@@ -7,7 +9,7 @@ def radix_sort(a_list):
     for item in a_list:
         if item > maximum:
             maximum = item
-        queue_list[item % 10**i].put(item)
+        queue_list[item % 10].put(item)
     a_list_pointer = 0
     for each_queue in queue_list:
         while not each_queue.empty():
@@ -20,7 +22,7 @@ def radix_sort(a_list):
 
 def _radix_sort(a_list, max_digits):
     queue_list = [Queue() for i in range(10)]
-    for i in xrange(max_digits):
+    for i in xrange(1, max_digits):
         for item in a_list:
             queue_list[(item // 10**i) % 10].put(item)
         a_list_pointer = 0
@@ -28,3 +30,24 @@ def _radix_sort(a_list, max_digits):
             while not each_queue.empty():
                 a_list[a_list_pointer] = each_queue.get()
                 a_list_pointer += 1
+
+if __name__ == '__main__':
+
+        nums = [random.sample(range(10**i), 10**i) for i in xrange(7)]
+
+        time = []
+
+        for num in nums:
+            def test(num):
+                radix_sort(nums)
+
+            setup = "from __main__ import test\nnum = {}"
+
+            time_one = timeit.Timer(
+                "test(nums)",
+                setup=setup.format(num)).timeit(number=10000)
+            
+            print(time_one)
+            time.append(time_one)
+
+        print(time)
