@@ -21,7 +21,6 @@ def partition(A, lo, hi):
     A[pivotIndex], A[hi] = A[hi], A[pivotIndex]
     storeIndex = lo
     for i in xrange(lo, hi):
-        # import pdb; pdb.set_trace()
         if A[i] < pivotValue:
             A[storeIndex], A[i] = A[i], A[storeIndex]
             storeIndex += 1
@@ -30,10 +29,9 @@ def partition(A, lo, hi):
 
 
 def select_pivot(a_list, lo, hi):
-    # import pdb; pdb.set_trace()
-    if a_list[lo] <= a_list[(hi - lo)/2] <= a_list[hi] or a_list[hi] <= a_list[(hi - lo)/2] <= a_list[lo]:
-        return (hi - lo)/2
-    elif a_list[(hi - lo)/2] <= a_list[lo] <= a_list[hi] or a_list[hi] <= a_list[lo] <= a_list[(hi - lo)/2]:
+    if a_list[lo] <= a_list[(hi - lo)//2] <= a_list[hi] or a_list[hi] <= a_list[(hi - lo)//2] <= a_list[lo]:
+        return (hi - lo)//2
+    elif a_list[(hi - lo)//2] <= a_list[lo] <= a_list[hi] or a_list[hi] <= a_list[lo] <= a_list[(hi - lo)//2]:
         return lo
     else:
         return hi
