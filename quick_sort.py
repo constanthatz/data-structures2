@@ -37,8 +37,9 @@ def select_pivot(a_list, lo, hi):
         return hi
 
 if __name__ == '__main__':
-    nums_best = [range(0, 10**i) for i in xrange(4)]
-    nums_worst = [item[::-1] for item in nums_best]
+    n = 3
+    nums_best = [range(0, 10**i) for i in xrange(n)]
+    nums_worst = [[0]*10**i for i in xrange(n)]
 
     time_best = []
     time_worst = []
