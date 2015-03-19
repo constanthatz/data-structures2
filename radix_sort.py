@@ -32,27 +32,23 @@ def _radix_sort(a_list, max_digits, queue_list):
 
 
 def string_radix_sort(string_list):
-    queue_list = [Queue() for i in range(57)]
     maximum = 0
     for string in string_list:
-        if len(string) > max:
+        if len(string) > maximum:
             maximum = len(string)
-        char = string[-1]
-        queue_list[ord(char)-65].put(string)
-        string_list_pointer = 0
-        for each_queue in queue_list:
-            while not each_queue.empty():
-                string_list[string_list_pointer] = each_queue.get()
-                string_list_pointer += 1
+    queue_list = [Queue() for i in range(27)]
 
     _string_radix_sort(string_list, maximum, queue_list)
 
 
 def _string_radix_sort(string_list, maximum, queue_list):
-    for i in xrange(1, maximum):
+    for i in reversed(xrange(0, maximum)):
         for string in string_list:
             try:
-                queue_list[ord(string[-1-i])-65].put(string)
+                char_ord = ord(string[i]) - 96
+                if char_ord < 1:
+                    char_ord += 32
+                queue_list[char_ord].put(string)
             except IndexError:
                 queue_list[0].put(string)
         string_list_pointer = 0
@@ -60,10 +56,6 @@ def _string_radix_sort(string_list, maximum, queue_list):
             while not each_queue.empty():
                 string_list[string_list_pointer] = each_queue.get()
                 string_list_pointer += 1
-
-
-
-
 
 
 if __name__ == '__main__':
