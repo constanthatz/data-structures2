@@ -8,7 +8,7 @@ def insertion_sort(the_list):
             index -= 1
 
 if __name__ == '__main__':
-        nums_best = [range(0, 10**i) for i in xrange(3)]
+        nums_best = [range(0, 10**i) for i in xrange(4)]
         nums_worst = [item[::-1] for item in nums_best]
 
         time_best = []
@@ -20,12 +20,14 @@ if __name__ == '__main__':
 
             setup = "from __main__ import test\nnums = {}"
 
-            time_best.append(timeit.Timer(
+            time_one = timeit.Timer(
                 "test(nums)",
-                setup=setup.format(nums_best[i])).timeit(number=10000))
-            time_worst.append(timeit.Timer(
-                "test(nums)",
-                setup=setup.format(nums_worst[i])).timeit(number=10000))
+                setup=setup.format(nums_best[i])).timeit(number=10)/10
 
-        print(time_best)
-        print(time_worst)
+            time_two = timeit.Timer(
+                "test(nums)",
+                setup=setup.format(nums_worst[i])).timeit(number=10)/10
+            time_best.append(time_one)
+            time_worst.append(time_two)
+            print('{}s: {} numbers, best'.format(time_one, len(nums_best[i])))
+            print('{}s: {} numbers, worst'.format(time_one, len(nums_worst[i])))

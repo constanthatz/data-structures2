@@ -68,21 +68,19 @@ def _string_radix_sort(string_list, maximum, queue_list):
 
 if __name__ == '__main__':
 
-        nums = [random.sample(range(10**i), 10**i) for i in xrange(7)]
+        nums = [random.sample(range(10**i), 10**i) for i in xrange(4)]
 
         time = []
 
         for num in nums:
             def test(num):
-                radix_sort(nums)
+                radix_sort(num)
 
             setup = "from __main__ import test\nnum = {}"
 
-            time_one = timeit.Timer(
-                "test(nums)",
-                setup=setup.format(num)).timeit(number=10000)
-            
-            print(time_one)
-            time.append(time_one)
+            time_one = timeit.timeit(
+                "test(num)",
+                setup=setup.format(num), number=10)/10.0
 
-        print(time)
+            print('{}s: {} numbers'.format(time_one, len(num)))
+            time.append(time_one)

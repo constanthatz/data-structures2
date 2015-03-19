@@ -45,17 +45,19 @@ if __name__ == '__main__':
     time_worst = []
 
     for i in xrange(len(nums_best)):
-        def test(nums, lo, hi):
-            quicksort(nums)
+            def test(nums):
+                quicksort(nums)
 
-        setup = "from __main__ import test\nnums = {}"
+            setup = "from __main__ import test\nnums = {}"
 
-        time_best.append(timeit.Timer(
-            "test(nums, 0, len(nums)-1)",
-            setup=setup.format(nums_best[i])).timeit(number=10000))
-        time_worst.append(timeit.Timer(
-            "test(nums, 0, len(nums)-1)",
-            setup=setup.format(nums_worst[i])).timeit(number=10000))
+            time_one = timeit.Timer(
+                "test(nums)",
+                setup=setup.format(nums_best[i])).timeit(number=10)/10
 
-    print(time_best)
-    print(time_worst)
+            time_two = timeit.Timer(
+                "test(nums)",
+                setup=setup.format(nums_worst[i])).timeit(number=10)/10
+            time_best.append(time_one)
+            time_worst.append(time_two)
+            print('{}s: {} numbers, best'.format(time_one, len(nums_best[i])))
+            print('{}s: {} numbers, worst'.format(time_one, len(nums_worst[i])))
